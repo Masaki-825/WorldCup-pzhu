@@ -7,15 +7,38 @@
 
   const STORAGE_KEY = 'theme-preference';
 
+  /** 主题切换监听器列表 */
+  var themeChangeListeners = [];
+
+  /**
+   * 注册主题切换回调
+   * @param {Function} callback - 主题切换后调用，参数为 ('light'|'dark')
+   */
+  function onThemeChange(callback) {
+    if (typeof callback === 'function') {
+      themeChangeListeners.push(callback);
+    }
+  }
+
   /**
    * 应用指定主题
    * @param {'light'|'dark'} theme - 主题名称
    */
   function applyTheme(theme) {
+    const oldTheme = document.body.classList.contains('night-mode') ? 'dark' : 'light';
+
     if (theme === 'dark') {
       document.body.classList.add('night-mode');
     } else {
       document.body.classList.remove('night-mode');
+    }
+
+    // 主题真正变化时才通知监听器
+    const newTheme = theme === 'dark' ? 'dark' : 'light';
+    if (oldTheme !== newTheme) {
+      themeChangeListeners.forEach(function (cb) {
+        try { cb(newTheme); } catch (e) { console.warn('主题回调执行失败：', e); }
+      });
     }
   }
 
@@ -127,6 +150,7 @@
     enableDayMode: enableDayMode,
     toggleTheme: toggleTheme,
     applyTheme: applyTheme,
+    onThemeChange: onThemeChange,
     getSystemPreference: getSystemPreference,
     getStoredPreference: getStoredPreference,
     init: initTheme

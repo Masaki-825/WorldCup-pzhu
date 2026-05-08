@@ -3,7 +3,7 @@
  * World Cup Fan Center
  *
  * 功能：
- * 1. 2026 美加墨世界杯场馆地图（三国轮廓 + 16 城市点）
+ * 1. 2026 美加墨世界杯场馆地图（Tableau Public 嵌入）
  * 2. 球迷时区表（4 时区实时时间 + 昼夜指示）
  * 3. 主队信息卡（读取设置中的主队，展示下一场比赛）
  */
@@ -42,142 +42,15 @@
   }
 
   /* ================================================================
-     常量：16 城市坐标（手工计算，已修正）
-     经度范围 -130° ~ -60° → x: 0% ~ 100%
-     纬度范围 55° ~ 15° → y: 0% ~ 100%
-     ================================================================ */
-  const CITY_COORDS = {
-    '墨西哥城':     { x: 43.8, y: 88.5 },
-    '纽约/新泽西':  { x: 79.7, y: 35.5 },
-    '达拉斯':       { x: 47.1, y: 55.0 },
-    '堪萨斯城':     { x: 50.3, y: 39.5 },
-    '休斯顿':       { x: 49.2, y: 63.0 },
-    '亚特兰大':     { x: 65.0, y: 53.0 },
-    '洛杉矶':       { x: 16.3, y: 52.5 },
-    '波士顿':       { x: 84.0, y: 31.0 },
-    '西雅图':       { x: 10.7, y: 17.5 },
-    '旧金山湾区':   { x: 10.5, y: 42.8 },
-    '费城':         { x: 78.0, y: 37.0 },
-    '迈阿密':       { x: 71.0, y: 73.0 },
-    '温哥华':       { x: 9.5,  y: 13.8 },
-    '蒙特雷':       { x: 42.1, y: 73.0 },
-    '瓜达拉哈拉':   { x: 37.5, y: 85.5 },
-    '多伦多':       { x: 72.0, y: 28.0 }
-  };
-
-  /* ================================================================
-     1. 场馆地图
-     ================================================================ */
-
-  /** 渲染地图：内联 SVG 三国轮廓 + HTML 城市点 */
-  function renderVenueMap() {
-    const canvas = document.getElementById('map-canvas');
-    if (!canvas) return;
-
-    // 清空
-    canvas.innerHTML = '';
-
-    // ---- 内联 SVG 三国轮廓（精细路径，viewBox 0 0 700 400）----
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', '0 0 700 400');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '100%');
-    svg.classList.add('map-svg');
-
-    // 美国本土 + 阿拉斯加轮廓
-    var usa = document.createElementNS(svgNS, 'path');
-    usa.setAttribute('d',
-      'M 70 72 L 35 140 L 56 200 L 126 232 L 154 180 L 196 208 L 245 232 L ' +
-      '280 272 L 350 272 L 385 248 L 364 200 L 406 200 L 420 168 L 476 140 L ' +
-      '504 120 L 546 152 L 574 140 L 588 168 L 574 220 L 560 248 L 518 288 L ' +
-      '476 312 L 364 288 L 308 272 L 280 220 L 245 180 L 210 180 L 175 192 L ' +
-      '154 160 L 105 140 L 70 72 Z');
-    usa.classList.add('map-country-svg');
-    usa.classList.add('map-country--usa');
-    usa.setAttribute('stroke', '#1a6b3c');
-    usa.setAttribute('stroke-linejoin', 'round');
-    svg.appendChild(usa);
-
-    // 墨西哥轮廓
-    var mexico = document.createElementNS(svgNS, 'path');
-    mexico.setAttribute('d',
-      'M 266 288 L 315 280 L 336 304 L 322 352 L 294 380 L 252 368 L 210 344 L 224 312 L 245 296 Z');
-    mexico.classList.add('map-country-svg');
-    mexico.classList.add('map-country--mex');
-    mexico.setAttribute('stroke', '#1a6b3c');
-    mexico.setAttribute('stroke-linejoin', 'round');
-    svg.appendChild(mexico);
-
-    // 加拿大轮廓
-    var canada = document.createElementNS(svgNS, 'path');
-    canada.setAttribute('d',
-      'M 35 32 L 126 16 L 210 32 L 315 20 L 420 32 L 518 20 L 595 48 L ' +
-      '560 100 L 532 96 L 504 112 L 476 120 L 420 112 L 385 96 L 336 104 L ' +
-      '280 88 L 224 100 L 175 88 L 126 100 L 84 80 L 56 56 Z');
-    canada.classList.add('map-country-svg');
-    canada.classList.add('map-country--can');
-    canada.setAttribute('stroke', '#1a6b3c');
-    canada.setAttribute('stroke-linejoin', 'round');
-    svg.appendChild(canada);
-
-    // 阿拉斯加轮廓（左上）
-    var alaska = document.createElementNS(svgNS, 'path');
-    alaska.setAttribute('d',
-      'M 28 60 L 14 80 L 10 108 L 28 112 L 42 96 L 56 80 L 42 64 Z');
-    alaska.classList.add('map-country-svg');
-    alaska.classList.add('map-country--can');
-    alaska.setAttribute('stroke', '#1a6b3c');
-    alaska.setAttribute('stroke-linejoin', 'round');
-    svg.appendChild(alaska);
-
-    // 格陵兰示意（右上）
-    var greenland = document.createElementNS(svgNS, 'path');
-    greenland.setAttribute('d',
-      'M 560 52 L 602 44 L 630 68 L 616 112 L 588 96 L 574 76 Z');
-    greenland.classList.add('map-country-svg');
-    greenland.classList.add('map-country--greenland');
-    greenland.setAttribute('stroke', '#1a6b3c');
-    greenland.setAttribute('stroke-linejoin', 'round');
-    greenland.setAttribute('fill', '#d5d5c0');
-    greenland.setAttribute('opacity', '0.5');
-    svg.appendChild(greenland);
-
-    canvas.appendChild(svg);
-
-    // ---- 城市点 ----
-    const venues = DashboardDataStore.venues || [];
-    venues.forEach(function (venue) {
-      const coords = CITY_COORDS[venue.city];
-      if (!coords) return;
-
-      var dot = document.createElement('span');
-      dot.className = 'map-city-dot';
-      dot.style.left = coords.x + '%';
-      dot.style.top = coords.y + '%';
-      dot.title = venue.city + ' — ' + venue.name;
-
-      // tooltip
-      var tooltip = document.createElement('span');
-      tooltip.className = 'map-city-tooltip';
-      tooltip.textContent = venue.city + '\n' + venue.name;
-      dot.appendChild(tooltip);
-
-      canvas.appendChild(dot);
-    });
-  }
-
-  /* ================================================================
-     2. 球迷时区表
+     1. 球迷时区表
      ================================================================ */
 
   /** 4 个时区的配置 */
   const TIMEZONE_CONFIGS = [
-    { label: '北京时间', city: '北京', timezone: 'Asia/Shanghai' },
-    { label: '美国东部', city: '纽约', timezone: 'America/New_York' },
-    { label: '美国西部', city: '洛杉矶', timezone: 'America/Los_Angeles' },
-    { label: '墨西哥中部', city: '墨西哥城', timezone: 'America/Mexico_City' }
+    { label: '北京时间', city: '北京', timezone: 'Asia/Shanghai', offsetBeijing: 0 },
+    { label: '美国东部', city: '纽约', timezone: 'America/New_York', offsetBeijing: -12 },
+    { label: '美国西部', city: '洛杉矶', timezone: 'America/Los_Angeles', offsetBeijing: -15 },
+    { label: '墨西哥中部', city: '墨西哥城', timezone: 'America/Mexico_City', offsetBeijing: -14 }
   ];
 
   /**
@@ -188,15 +61,6 @@
   function getDayNight(date) {
     var hours = date.getHours();
     return (hours >= 6 && hours < 18) ? 'day' : 'night';
-  }
-
-  /**
-   * 格式化时间（HH:mm）
-   * @param {Date} date
-   * @returns {string}
-   */
-  function formatTime(date) {
-    return String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0');
   }
 
   /** 渲染时区表 */
@@ -240,6 +104,19 @@
       item.appendChild(citySpan);
       item.appendChild(timeSpan);
       item.appendChild(iconSpan);
+
+      // 时差偏移文字（红色，括号内）—— 北京时区不显示
+      var offsetVal = cfg.offsetBeijing;
+      if (offsetVal !== 0) {
+        var offsetSpan = document.createElement('span');
+        offsetSpan.className = 'timezone-item__offset';
+        if (offsetVal > 0) {
+          offsetSpan.textContent = '(早北京时间 ' + offsetVal + ' 小时)';
+        } else {
+          offsetSpan.textContent = '(晚北京时间 ' + Math.abs(offsetVal) + ' 小时)';
+        }
+        item.appendChild(offsetSpan);
+      }
       container.appendChild(item);
     });
   }
@@ -259,7 +136,7 @@
   }
 
   /* ================================================================
-     3. 主队信息卡
+     2. 主队信息卡
      ================================================================ */
 
   /**
@@ -324,6 +201,39 @@
     return teamId;
   }
 
+  /** 内置映射 - teamId -> 国旗 emoji */
+  var FLAG_MAP = {
+    MEX: '🇲🇽', URU: '🇺🇾', NGA: '🇳🇬', FRA: '🇫🇷', SEN: '🇸🇳', PER: '🇵🇪',
+    ARG: '🇦🇷', GER: '🇩🇪', ALG: '🇩🇿', USA: '🇺🇸', CRO: '🇭🇷', QAT: '🇶🇦',
+    ESP: '🇪🇸', JPN: '🇯🇵', EGY: '🇪🇬', ENG: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', MAR: '🇲🇦', PAN: '🇵🇦',
+    BRA: '🇧🇷', DEN: '🇩🇰', CIV: '🇨🇮', NED: '🇳🇱', AUS: '🇦🇺', CHN: '🇨🇳',
+    POR: '🇵🇹', POL: '🇵🇱', ECU: '🇪🇨', ITA: '🇮🇹', CMR: '🇨🇲', BEL: '🇧🇪',
+    KOR: '🇰🇷', SER: '🇷🇸', UAE: '🇦🇪', COL: '🇨🇴', SUI: '🇨🇭', CAN: '🇨🇦',
+    UZB: '🇺🇿', JAM: '🇯🇲', GRE: '🇬🇷', CRC: '🇨🇷', TUR: '🇹🇷', VEN: '🇻🇪',
+    KSA: '🇸🇦', UKR: '🇺🇦', GHA: '🇬🇭', IRN: '🇮🇷', WAL: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', TUN: '🇹🇳'
+  };
+
+  /** 查找球队的国旗 emoji */
+  function getTeamFlag(teamId) {
+    if (FLAG_MAP[teamId]) return FLAG_MAP[teamId];
+    var teams = DashboardDataStore.teams;
+    if (!teams) return null;
+    for (var i = 0; i < teams.length; i++) {
+      if (teams[i].id === teamId) return FLAG_MAP[teamId] || null;
+    }
+    return null;
+  }
+
+  /** 从 teams.json 读取 team.group 字段 */
+  function getTeamGroup(teamId) {
+    var teams = DashboardDataStore.teams;
+    if (!teams) return null;
+    for (var i = 0; i < teams.length; i++) {
+      if (teams[i].id === teamId) return teams[i].group || null;
+    }
+    return null;
+  }
+
   /** 渲染主队信息卡 */
   function renderTeamCard() {
     var body = document.getElementById('team-card-body');
@@ -339,7 +249,7 @@
     }
 
     if (!favorite) {
-      body.innerHTML = '<p class="team-card__placeholder">请前往 <a href="#settings" class="team-card__link" data-section="settings">设置</a> 选择你的主队</p>';
+      body.innerHTML = '<p class="team-card__placeholder">您看好哪支球队,可点击选择主队——<a href="#settings" class="team-card__link" data-section="settings">设置</a></p>';
       // 绑定点击跳转
       var link = body.querySelector('.team-card__link');
       if (link) {
@@ -368,8 +278,17 @@
     var teamName = getTeamName(favorite);
     var nextMatch = findNextMatch(favorite);
 
+    // 查找球队的 flag emoji 和 group 信息
+    var flagEmoji = getTeamFlag(favorite);
+    var groupInfo = getTeamGroup(favorite);
+
     var html = '';
-    html += '<div class="team-card__team-name">' + teamName + '</div>';
+    html += '<div class="team-card__team-name">';
+    if (flagEmoji) html += '<span class="team-card__flag">' + flagEmoji + '</span>';
+    html += teamName + '</div>';
+    if (groupInfo) {
+      html += '<div class="team-card__group">小组 ' + groupInfo + '</div>';
+    }
 
     if (nextMatch) {
       var homeName = getTeamName(nextMatch._home);
@@ -399,7 +318,6 @@
     await loadAllData();
 
     // 渲染各模块
-    renderVenueMap();
     renderTeamCard();
     startTimezoneTimer();
   }
@@ -423,6 +341,7 @@
 
     WorldCupNav.registerSwitchHook('after', 'dashboard', initDashboard);
     WorldCupNav.registerSwitchHook('before', 'dashboard', leaveDashboard);
+
     console.log('仪表盘钩子已注册。');
   }
 
@@ -453,10 +372,8 @@
   // 暴露 API
   window.WorldCupDashboard = {
     init: initDashboard,
-    renderVenueMap: renderVenueMap,
     renderTeamCard: renderTeamCard,
     renderTimezoneStrip: renderTimezoneStrip,
-    loadAllData: loadAllData,
-    CITY_COORDS: CITY_COORDS
+    loadAllData: loadAllData
   };
 })();
