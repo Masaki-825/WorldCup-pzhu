@@ -5,20 +5,42 @@
 (function () {
   'use strict';
 
+  const STORAGE_KEY = 'theme-preference';
+
   /**
-   * 切换到夜间模式
+   * 应用指定主题
+   * @param {'light'|'dark'} theme - 主题名称
    */
-  function enableNightMode() {
-    document.body.classList.add('night-mode');
-    // TODO: 持久化主题偏好到 localStorage
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('night-mode');
+    } else {
+      document.body.classList.remove('night-mode');
+    }
   }
 
   /**
-   * 切换到日间模式
+   * 切换到夜间模式，并持久化
+   */
+  function enableNightMode() {
+    applyTheme('dark');
+    try {
+      localStorage.setItem(STORAGE_KEY, 'dark');
+    } catch (e) {
+      // localStorage 不可用时静默忽略
+    }
+  }
+
+  /**
+   * 切换到日间模式，并持久化
    */
   function enableDayMode() {
-    document.body.classList.remove('night-mode');
-    // TODO: 持久化主题偏好到 localStorage
+    applyTheme('light');
+    try {
+      localStorage.setItem(STORAGE_KEY, 'light');
+    } catch (e) {
+      // localStorage 不可用时静默忽略
+    }
   }
 
   /**
@@ -33,10 +55,60 @@
   }
 
   /**
-   * 从 localStorage 恢复用户主题偏好
+   * 检测系统颜色偏好
+   * @returns {'dark'|'light'}
+   */
+  function getSystemPreference() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+
+  /**
+   * 从 localStorage 读取用户偏好
+   * @returns {string|null}
+   */
+  function getStoredPreference() {
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * 加载并应用主题（优先级：localStorage > 系统偏好 > 日间默认）
    */
   function loadThemePreference() {
-    // TODO: 读取 localStorage 中的主题设置并应用
+    const stored = getStoredPreference();
+
+    if (stored === 'dark' || stored === 'light') {
+      // 用户曾手动选择，以 localStorage 为准
+      applyTheme(stored);
+    } else {
+      // 无存储记录时，跟随系统偏好
+      const systemPref = getSystemPreference();
+      applyTheme(systemPref);
+    }
+  }
+
+  /**
+   * 监听系统主题变化（当用户未手动设置时自动跟随）
+   */
+  function listenSystemThemeChange() {
+    if (!window.matchMedia) return;
+
+    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    if (darkQuery.addEventListener) {
+      darkQuery.addEventListener('change', function (e) {
+        const stored = getStoredPreference();
+        // 仅在用户无手动偏好时才跟随系统
+        if (!stored) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
   }
 
   /**
@@ -44,7 +116,9 @@
    */
   function initTheme() {
     loadThemePreference();
-    console.log('主题模块已就绪（待实现）。');
+    listenSystemThemeChange();
+    console.log('主题模块已就绪（当前：' +
+      (document.body.classList.contains('night-mode') ? '夜间模式' : '日间模式') + '）。');
   }
 
   // 挂载到全局，方便其他模块调用
@@ -52,6 +126,9 @@
     enableNightMode: enableNightMode,
     enableDayMode: enableDayMode,
     toggleTheme: toggleTheme,
+    applyTheme: applyTheme,
+    getSystemPreference: getSystemPreference,
+    getStoredPreference: getStoredPreference,
     init: initTheme
   };
 
