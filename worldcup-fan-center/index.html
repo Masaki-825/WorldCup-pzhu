@@ -21,13 +21,40 @@
   </nav>
 
   <main id="main-content">
-    <!-- 仪表盘模块 -->
+    <!-- ========== 仪表盘模块 ========== -->
     <section id="dashboard">
       <h2>仪表盘</h2>
-      <div class="module-container">
-        <!-- 后续放入：赛事概览卡片、实时比分、热门新闻聚合等 -->
-        <div id="countdown">
-          <!-- 倒计时由 countdown.js 动态渲染 -->
+      <div class="dashboard-grid">
+        <!-- 左侧 35% -->
+        <div class="dashboard-left">
+          <!-- 主队信息卡 -->
+          <div class="team-card module-container" id="team-card">
+            <h3 class="team-card__title">我的主队</h3>
+            <div class="team-card__body" id="team-card-body">
+              <p class="team-card__placeholder">加载中...</p>
+            </div>
+          </div>
+          <!-- 球迷时区表 -->
+          <div class="timezone-strip module-container" id="timezone-strip">
+            <h3 class="timezone-strip__title">球迷时区表</h3>
+            <div class="timezone-list" id="timezone-list">
+              <!-- 由 dashboard.js 动态渲染 -->
+            </div>
+          </div>
+        </div>
+        <!-- 右侧 65% -->
+        <div class="dashboard-right">
+          <!-- 场馆地图 -->
+          <div class="venue-map module-container" id="venue-map">
+            <h3 class="venue-map__title">2026 美加墨世界杯场馆分布</h3>
+            <div class="map-canvas" id="map-canvas">
+              <!-- 三国轮廓 + 城市圆点由 dashboard.js 动态渲染 -->
+            </div>
+          </div>
+          <!-- 倒计时（保持现有，由 countdown.js 渲染） -->
+          <div id="countdown">
+            <!-- 由 countdown.js 动态渲染 -->
+          </div>
         </div>
       </div>
     </section>
@@ -84,7 +111,46 @@
     <section id="settings" style="display: none;">
       <h2>设置</h2>
       <div class="module-container">
-        <!-- 后续放入：主题切换、语言设置、通知偏好等 -->
+        <!-- ========== 控制组1：日/夜模式 ========== -->
+        <div class="settings-group">
+          <div class="settings-group__header">
+            <h3>外观主题</h3>
+          </div>
+          <p class="settings-group__desc">切换日间/夜间显示模式</p>
+          <div class="settings-group__controls">
+            <button id="theme-toggle-btn" class="btn btn--primary" type="button">
+              <span id="theme-toggle-text">切换为夜间模式</span>
+            </button>
+            <label class="checkbox-label" title="跟随操作系统明暗模式自动切换">
+              <input type="checkbox" id="theme-auto-checkbox">
+              跟随系统自动切换
+            </label>
+          </div>
+        </div>
+        <!-- ========== 控制组2：字体大小 ========== -->
+        <div class="settings-group">
+          <div class="settings-group__header">
+            <h3>字体大小</h3>
+          </div>
+          <p class="settings-group__desc">调整页面文字显示大小</p>
+          <div class="settings-group__controls font-controls">
+            <button id="font-decrease" class="btn btn--icon" type="button" title="减小字体">A&#8722;</button>
+            <span id="font-size-label" class="font-size-label">中</span>
+            <button id="font-increase" class="btn btn--icon" type="button" title="增大字体">A+</button>
+          </div>
+        </div>
+        <!-- ========== 控制组3：主队选择 ========== -->
+        <div class="settings-group">
+          <div class="settings-group__header">
+            <h3>我的主队</h3>
+          </div>
+          <p class="settings-group__desc">选择你最支持的球队，将在仪表盘中高亮</p>
+          <div class="settings-group__controls">
+            <select id="favorite-team-select" class="select-input">
+              <option value="">-- 请选择主队 --</option>
+            </select>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -93,5 +159,6 @@
   <script src="js/theme.js"></script>
   <script src="js/countdown.js"></script>
   <script src="js/settings.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
 </html>

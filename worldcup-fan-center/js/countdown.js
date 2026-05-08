@@ -57,7 +57,7 @@
     if (time.total <= 0) {
       // 赛事已开始或已结束
       hasEnded = true;
-      container.innerHTML = '<div class="countdown-ended">⚽ 赛事进行中</div>';
+container.innerHTML = '<div class="countdown-ended">赛事进行中</div>';
       return;
     }
 
