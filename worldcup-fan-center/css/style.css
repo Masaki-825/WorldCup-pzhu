@@ -1,12 +1,72 @@
 /* ========================================
    CSS 变量定义区域
    ======================================== */
+
+/* 日间主题（默认） */
 :root {
-  /* 日间主题变量 - 后续定义 */
+  /* 背景色 */
+  --bg-primary: #f9f7f1;
+  --bg-secondary: #ffffff;
+
+  /* 文字色 */
+  --text-primary: #2c2c2c;
+  --text-secondary: #555;
+
+  /* 强调色 */
+  --accent: #1a6b3c;
+  --accent-hover: #145a2e;
+
+  /* 导航栏 */
+  --nav-bg: #1e3a2f;
+  --nav-text: #f0f0f0;
+  --nav-text-dim: #a0b5a8;
+  --nav-active-border: #4caf50;
+  --nav-hover-bg: rgba(255, 255, 255, 0.08);
+
+  /* 卡片 */
+  --card-bg: #ffffff;
+  --card-border: #e0dcd0;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  /* 通用 */
+  --border-light: #e0dcd0;
+  --max-width: 1400px;
+  --nav-height: 60px;
+  --font-main: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Impact', 'Arial Black', sans-serif;
+
+  /* 倒计时 */
+  --countdown-bg: #f0efe8;
+  --countdown-num: #1a6b3c;
+  --countdown-label: #666;
 }
 
+/* 夜间主题 */
 body.night-mode {
-  /* 夜间主题变量 - 后续定义 */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+
+  --accent: #f0b90b;
+  --accent-hover: #d4a30a;
+
+  --nav-bg: #0b1120;
+  --nav-text: #cbd5e1;
+  --nav-text-dim: #64748b;
+  --nav-active-border: #f0b90b;
+  --nav-hover-bg: rgba(255, 255, 255, 0.06);
+
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+
+  --border-light: #334155;
+
+  --countdown-bg: #1a2332;
+  --countdown-num: #f0b90b;
+  --countdown-label: #94a3b8;
 }
 
 /* ========================================
@@ -26,11 +86,12 @@ html {
 }
 
 body {
-  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-  background-color: #faf9f6;
-  color: #222;
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
-  padding-top: 60px;
+  padding-top: var(--nav-height);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ========================================
@@ -42,11 +103,12 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: #1a2a1f;
+  background-color: var(--nav-bg);
   padding: 0 20px;
-  height: 60px;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .nav-list {
@@ -56,7 +118,7 @@ body {
   gap: 4px;
   align-items: center;
   height: 100%;
-  max-width: 1400px;
+  max-width: var(--max-width);
   margin: 0 auto;
   width: 100%;
 }
@@ -72,31 +134,32 @@ body {
   align-items: center;
   height: 100%;
   padding: 0 18px;
-  color: #c4c4c4;
+  color: var(--nav-text-dim);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.5px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   border-bottom: 3px solid transparent;
+  cursor: pointer;
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--nav-text);
+  background-color: var(--nav-hover-bg);
 }
 
 .nav-link.active {
-  color: #ffffff;
-  border-bottom-color: #4caf50;
-  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--nav-text);
+  border-bottom-color: var(--nav-active-border);
+  background-color: var(--nav-hover-bg);
 }
 
 /* ========================================
    主内容区
    ======================================== */
 #main-content {
-  max-width: 1400px;
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 32px 24px;
 }
@@ -111,19 +174,70 @@ section {
 section h2 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #1a2a1f;
+  font-family: var(--font-display);
+  color: var(--text-primary);
   margin-bottom: 20px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e0e0d8;
+  border-bottom: 2px solid var(--border-light);
 }
 
 .module-container {
   min-height: 200px;
-  background-color: #ffffff;
-  border: 1px solid #e8e8e0;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ========================================
+   倒计时模块
+   ======================================== */
+#countdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 28px 16px;
+  margin-top: 12px;
+  background-color: var(--countdown-bg);
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+#countdown .countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+#countdown .countdown-item .number {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--countdown-num);
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+#countdown .countdown-item .label {
+  font-size: 0.85rem;
+  color: var(--countdown-label);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+#countdown .countdown-ended {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  width: 100%;
 }
 
 /* ========================================
