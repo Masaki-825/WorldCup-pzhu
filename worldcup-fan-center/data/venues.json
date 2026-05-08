@@ -1,0 +1,146 @@
+[
+  {
+    "id": "venue-01",
+    "name": "阿兹特克体育场 (Estadio Azteca)",
+    "city": "墨西哥城",
+    "country": "墨西哥",
+    "capacity": 87523,
+    "opened": 1966,
+    "matches": 5
+  },
+  {
+    "id": "venue-02",
+    "name": "大都会人寿体育场 (MetLife Stadium)",
+    "city": "纽约/新泽西",
+    "country": "美国",
+    "capacity": 82500,
+    "opened": 2010,
+    "matches": 5
+  },
+  {
+    "id": "venue-03",
+    "name": "AT&T体育场 (AT&T Stadium)",
+    "city": "达拉斯",
+    "country": "美国",
+    "capacity": 80000,
+    "opened": 2009,
+    "matches": 6
+  },
+  {
+    "id": "venue-04",
+    "name": "箭头体育场 (Arrowhead Stadium)",
+    "city": "堪萨斯城",
+    "country": "美国",
+    "capacity": 76416,
+    "opened": 1972,
+    "matches": 5
+  },
+  {
+    "id": "venue-05",
+    "name": "NRG体育场 (NRG Stadium)",
+    "city": "休斯顿",
+    "country": "美国",
+    "capacity": 72220,
+    "opened": 2002,
+    "matches": 5
+  },
+  {
+    "id": "venue-06",
+    "name": "梅赛德斯-奔驰体育场 (Mercedes-Benz Stadium)",
+    "city": "亚特兰大",
+    "country": "美国",
+    "capacity": 71000,
+    "opened": 2017,
+    "matches": 6
+  },
+  {
+    "id": "venue-07",
+    "name": "SoFi体育场 (SoFi Stadium)",
+    "city": "洛杉矶",
+    "country": "美国",
+    "capacity": 70240,
+    "opened": 2020,
+    "matches": 6
+  },
+  {
+    "id": "venue-08",
+    "name": "吉列体育场 (Gillette Stadium)",
+    "city": "波士顿",
+    "country": "美国",
+    "capacity": 68756,
+    "opened": 2002,
+    "matches": 5
+  },
+  {
+    "id": "venue-09",
+    "name": "流明球场 (Lumen Field)",
+    "city": "西雅图",
+    "country": "美国",
+    "capacity": 68740,
+    "opened": 2002,
+    "matches": 5
+  },
+  {
+    "id": "venue-10",
+    "name": "李维斯体育场 (Levi's Stadium)",
+    "city": "旧金山湾区",
+    "country": "美国",
+    "capacity": 68500,
+    "opened": 2014,
+    "matches": 5
+  },
+  {
+    "id": "venue-11",
+    "name": "林肯金融体育场 (Lincoln Financial Field)",
+    "city": "费城",
+    "country": "美国",
+    "capacity": 67594,
+    "opened": 2003,
+    "matches": 5
+  },
+  {
+    "id": "venue-12",
+    "name": "硬石体育场 (Hard Rock Stadium)",
+    "city": "迈阿密",
+    "country": "美国",
+    "capacity": 65326,
+    "opened": 1987,
+    "matches": 6
+  },
+  {
+    "id": "venue-13",
+    "name": "卑诗体育场 (BC Place)",
+    "city": "温哥华",
+    "country": "加拿大",
+    "capacity": 54500,
+    "opened": 1983,
+    "matches": 5
+  },
+  {
+    "id": "venue-14",
+    "name": "BBVA体育场 (Estadio BBVA)",
+    "city": "蒙特雷",
+    "country": "墨西哥",
+    "capacity": 53500,
+    "opened": 2015,
+    "matches": 4
+  },
+  {
+    "id": "venue-15",
+    "name": "阿克伦体育场 (Estadio Akron)",
+    "city": "瓜达拉哈拉",
+    "country": "墨西哥",
+    "capacity": 46232,
+    "opened": 2010,
+    "matches": 4
+  },
+  {
+    "id": "venue-16",
+    "name": "BMO球场 (BMO Field)",
+    "city": "多伦多",
+    "country": "加拿大",
+    "capacity": 45000,
+    "opened": 2007,
+    "matches": 4
+  }
+]
