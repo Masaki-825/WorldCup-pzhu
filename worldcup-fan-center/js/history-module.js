@@ -14,10 +14,8 @@
      常量定义
      ================================================================ */
 
-  var HISTORY_DATA_URL = 'data/history.json';
-
   /* ================================================================
-     经典比赛（硬编码）
+      经典比赛（硬编码）
      ================================================================ */
 
   var classicMatches = [
@@ -116,34 +114,29 @@
     html += '</div>';
     scrollContainer.innerHTML = html;
 
-    // 添加横向滚动惯性效果（鼠标拖拽滚轮）
+    // 横向滚动惯性效果（鼠标滚轮）
     scrollContainer.addEventListener('wheel', function (e) {
       if (e.deltaY !== 0) {
         e.preventDefault();
         this.scrollLeft += e.deltaY;
       }
     }, { passive: false });
+
+    // 自动滚动定位到2022年卡片
+    var latestCard = scrollContainer.querySelector('.champions-card--latest');
+    if (latestCard) {
+      var scrollLeft = latestCard.offsetLeft - scrollContainer.clientWidth / 2 + latestCard.offsetWidth / 2;
+      scrollContainer.scrollLeft = Math.max(0, scrollLeft);
+    }
   }
 
   function loadChampionsWall() {
-    fetch(HISTORY_DATA_URL)
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status);
-        }
-        return response.json();
-      })
-      .then(function (data) {
-        if (data.champions && data.champions.length) {
-          renderChampionsWall(data.champions);
-        } else {
-          showChampionsFallback();
-        }
-      })
-      .catch(function (err) {
-        console.warn('冠军墙数据加载失败：' + err.message);
-        showChampionsFallback();
-      });
+    try {
+      var data = window.__HISTORY_DATA__;
+      if (data && data.champions && data.champions.length) {
+        renderChampionsWall(data.champions);
+      } else { showChampionsFallback(); }
+    } catch (e) { showChampionsFallback(); }
   }
 
   function showChampionsFallback() {
@@ -171,9 +164,9 @@
       html += '<span class="classic-match-card__year">' + m.year + '</span>';
       html += '<span class="classic-match-card__stage">' + m.stage + '</span>';
       html += '</div>';
-      html += '<p class="classic-match-card__teams">' + m.teams + '</p>';
+      html += '<p class="classic-match-card__matchup">' + m.teams + '</p>';
       html += '<p class="classic-match-card__score">' + m.score + '</p>';
-      html += '<p class="classic-match-card__desc">' + m.desc + '</p>';
+      html += '<p class="classic-match-card__summary">' + m.desc + '</p>';
       html += '</div>';
     }
 
@@ -189,25 +182,12 @@
   var currentTriviaIndex = -1;
 
   function loadTrivia() {
-    fetch(HISTORY_DATA_URL)
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status);
-        }
-        return response.json();
-      })
-      .then(function (data) {
-        if (data.trivia && data.trivia.length) {
-          triviaData = data.trivia;
-          showRandomTrivia();
-        } else {
-          showTriviaFallback();
-        }
-      })
-      .catch(function (err) {
-        console.warn('冷知识数据加载失败：' + err.message);
-        showTriviaFallback();
-      });
+    try {
+      var data = window.__HISTORY_DATA__;
+      if (data && data.trivia && data.trivia.length) {
+        triviaData = data.trivia; showRandomTrivia();
+      } else { showTriviaFallback(); }
+    } catch (e) { showTriviaFallback(); }
   }
 
   function showRandomTrivia() {

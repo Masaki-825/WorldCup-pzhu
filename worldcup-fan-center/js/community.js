@@ -139,7 +139,7 @@
      ================================================================ */
 
   function renderCommunityWall() {
-    var container = safeGetById('community-wall-grid');
+    var container = safeGetById('fan-wall-grid');
     if (!container) return;
 
     var html = '';
@@ -147,10 +147,10 @@
     for (var i = 0; i < communityPosts.length; i++) {
       var post = communityPosts[i];
 
-      html += '<div class="community-card">';
-      html += '<div class="community-card__avatar">' + post.initials + '</div>';
-      html += '<p class="community-card__username">' + post.username + '</p>';
-      html += '<p class="community-card__sentiment">' + post.sentiment + '</p>';
+      html += '<div class="fan-card">';
+      html += '<div class="fan-card__avatar">' + post.initials + '</div>';
+      html += '<p class="fan-card__username">' + post.username + '</p>';
+      html += '<p class="fan-card__quote">' + post.sentiment + '</p>';
       html += '</div>';
     }
 

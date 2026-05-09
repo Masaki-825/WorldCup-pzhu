@@ -393,6 +393,7 @@
       renderBracket();
       renderTeamSelect();
       resetHighlight();
+      bindEvents();
     });
   } else {
     // 降级：直接初始化
