@@ -27,7 +27,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)  # 项目根 d:/.../WorldCup
 
 JSON_PATH = os.path.join(PROJECT_ROOT, "worldcup-fan-center", "data", "team-rankings.json")
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "assets", "rankings")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "worldcup-fan-center", "assets", "ranking")
 CHART_MAP_PATH = os.path.join(PROJECT_ROOT, "data", "chart-map.json")
 
 # 图片尺寸 / 质量
