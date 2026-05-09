@@ -2,82 +2,129 @@
    CSS 变量定义区域
    ======================================== */
 
+/* ========================================
+   方案 D：主办国风情（Mexico 2026）
+   日间：暖沙色 + 陶红 + 仙人掌绿
+   夜间：深靛蓝 + 日落橙 + 亮绿
+   ======================================== */
+
 /* 日间主题（默认） */
 :root {
   /* 背景色 */
-  --bg-primary: #f9f7f1;
-  --bg-secondary: #ffffff;
+  --bg-primary: #f5ede3;
+  --bg-secondary: #fcf8f2;
 
   /* 文字色 */
-  --text-primary: #2c2c2c;
-  --text-secondary: #555;
+  --text-primary: #2a221d;
+  --text-secondary: #706658;
 
   /* 强调色 */
-  --accent: #1a6b3c;
-  --accent-hover: #145a2e;
+  --accent: #c95d3a;
+  --accent-hover: #ad4a2e;
+  --accent-alt: #5a8f4e;
+  --accent-knockout: #8b2c20;
 
   /* 导航栏 */
-  --nav-bg: #1e3a2f;
-  --nav-text: #f0f0f0;
-  --nav-text-dim: #a0b5a8;
-  --nav-active-border: #4caf50;
+  --nav-bg: #3d1e14;
+  --nav-text: #f0e6d8;
+  --nav-text-dim: #b8a392;
+  --nav-active-border: #c95d3a;
   --nav-hover-bg: rgba(255, 255, 255, 0.08);
 
   /* 卡片 */
-  --card-bg: #ffffff;
-  --card-border: #e0dcd0;
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-bg: #fcf8f2;
+  --card-border: #e0d5c8;
+  --card-shadow: 0 2px 8px rgba(60, 40, 20, 0.08);
+  --shadow-card-hover: 0 8px 30px rgba(60, 40, 20, 0.15);
 
   /* 通用 */
-  --border-light: #e0dcd0;
+  --border-light: #e0d5c8;
   --max-width: 1400px;
   --nav-height: 60px;
   --font-main: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
   --font-display: 'Impact', 'Arial Black', sans-serif;
 
   /* 倒计时 */
-  --countdown-bg: #f0efe8;
-  --countdown-num: #1a6b3c;
-  --countdown-label: #666;
+  --countdown-bg: #f5ede3;
+  --countdown-num: #c95d3a;
+  --countdown-label: #706658;
 
   /* 字体大小 */
   --font-base: 16px;
 
-  /* 活跃分组高亮色（蓝色系，与全站草绿主色区分） */
-  --highlight-active: #2563eb;
+  /* 活跃分组高亮色 */
+  --highlight-active: #c95d3a;
+
+  /* 时区卡片 */
+  --timezone-day-bg: #faf3e4;
+  --timezone-day-border: #d4a017;
+  --timezone-night-bg: #e6e1f0;
+  --timezone-night-border: #6b5b8a;
+  --timezone-offset: #c95d3a;
+
+  /* 滚动条 & focus */
+  --scrollbar-thumb: #c4b8a8;
+  --focus-ring-rgb: 201, 93, 58;
+
+  /* 本地时间色 */
+  --local-time-color: #4a7cbf;
+
+  /* 筛选器 */
+  --filter-border: #d0c8ba;
+  --filter-focus-shadow-day: 0 0 0 3px rgba(201, 93, 58, 0.18);
 }
 
 /* 夜间主题 */
 body.night-mode {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
+  --bg-primary: #0c1628;
+  --bg-secondary: #18233a;
 
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
+  --text-primary: #e6ddd0;
+  --text-secondary: #9e917d;
 
-  --accent: #f0b90b;
-  --accent-hover: #d4a30a;
+  --accent: #f4a261;
+  --accent-hover: #e08c48;
+  --accent-alt: #7ab86a;
+  --accent-knockout: #f08060;
 
-  --nav-bg: #0b1120;
+  --nav-bg: #080e1a;
   --nav-text: #cbd5e1;
-  --nav-text-dim: #64748b;
-  --nav-active-border: #f0b90b;
+  --nav-text-dim: #8b97a8;
+  --nav-active-border: #f4a261;
   --nav-hover-bg: rgba(255, 255, 255, 0.06);
 
-  --card-bg: #1e293b;
-  --card-border: #334155;
+  --card-bg: #18233a;
+  --card-border: #2a3a55;
   --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
 
-  --border-light: #334155;
+  --border-light: #2a3a55;
 
-  --countdown-bg: #1a2332;
-  --countdown-num: #f0b90b;
-  --countdown-label: #94a3b8;
+  --countdown-bg: #18233a;
+  --countdown-num: #f4a261;
+  --countdown-label: #9e917d;
 
   --font-base: 16px;
 
-  /* 活跃分组高亮色（夜间与金色主色一致） */
-  --highlight-active: var(--accent);
+  /* 活跃分组高亮色（夜间与主强调色一致） */
+  --highlight-active: #f4a261;
+
+  /* 时区卡片 */
+  --timezone-day-bg: #2a2418;
+  --timezone-day-border: #f4a261;
+  --timezone-night-bg: #1a1e2e;
+  --timezone-night-border: #8b7fb0;
+
+  /* 滚动条 & focus */
+  --scrollbar-thumb: #4a5568;
+  --focus-ring-rgb: 244, 162, 97;
+
+  /* 本地时间色 */
+  --local-time-color: #7ab8f5;
+
+  /* 筛选器 */
+  --filter-border: #2a3a55;
+  --filter-focus-shadow-day: 0 0 0 3px rgba(244, 162, 97, 0.25);
 }
 
 /* ========================================
@@ -410,10 +457,10 @@ body[data-font-size="large"] { --font-base: 18px; }
 .select-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.15);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 body.night-mode .select-input:focus {
-  box-shadow: 0 0 0 3px rgba(240, 185, 11, 0.2);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 
 /* ================================================================
@@ -561,21 +608,13 @@ body.night-mode .select-input:focus {
 }
 
 .timezone-item--day {
-  background: #fff8e1;
-  border-color: #ffcc02;
-}
-body.night-mode .timezone-item--day {
-  background: #2a2a1e;
-  border-color: #f0b90b;
+  background: var(--timezone-day-bg);
+  border-color: var(--timezone-day-border);
 }
 
 .timezone-item--night {
-  background: #e8eaf6;
-  border-color: #3f51b5;
-}
-body.night-mode .timezone-item--night {
-  background: #1a1a2e;
-  border-color: #7986cb;
+  background: var(--timezone-night-bg);
+  border-color: var(--timezone-night-border);
 }
 
 .timezone-item__city {
@@ -599,7 +638,7 @@ body.night-mode .timezone-item--night {
 }
 .timezone-item__offset {
   font-size: 0.75rem;
-  color: #e53935;
+  color: var(--timezone-offset);
   font-weight: 500;
   margin-top: 4px;
 }
@@ -639,7 +678,7 @@ body.night-mode .timezone-item--night {
 }
 
 body.night-mode .map-canvas {
-  border-color: #2a3545;
+  border-color: var(--border-light);
 }
 
 /* Tableau 嵌入容器 */
@@ -710,24 +749,24 @@ body.night-mode .map-canvas {
 .schedule-filter-select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.15);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 
 /* 夜间模式 */
 body.night-mode .schedule-filter-select {
-  border-color: #334155;
+  border-color: var(--border-light);
   background-color: var(--bg-secondary);
   color: var(--text-primary);
 }
 
 body.night-mode .schedule-filter-select:focus {
-  border-color: #f0b90b;
-  box-shadow: 0 0 0 3px rgba(240, 185, 11, 0.2);
+  border-color: var(--accent);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 
 body.night-mode .schedule-timezone-hint {
-  background: #1a2332;
-  border-left-color: #f0b90b;
+  background: var(--countdown-bg);
+  border-left-color: var(--accent);
 }
 
 /* 滚动列表 */
@@ -736,7 +775,7 @@ body.night-mode .schedule-timezone-hint {
   overflow-y: auto;
   padding-right: 8px;
   scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .schedule-list-wrapper::-webkit-scrollbar {
@@ -749,12 +788,12 @@ body.night-mode .schedule-timezone-hint {
 }
 
 .schedule-list-wrapper::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 body.night-mode .schedule-list-wrapper::-webkit-scrollbar-thumb {
-  background: #4a5568;
+  background: var(--scrollbar-thumb);
 }
 
 /* 日期分组标题 */
@@ -784,7 +823,7 @@ body.night-mode .schedule-list-wrapper::-webkit-scrollbar-thumb {
 /* 活跃分组内的日期标题 */
 .schedule-date-group.active-date-group .schedule-date-header {
   color: var(--highlight-active);
-  text-shadow: 0 0 12px rgba(37, 99, 235, 0.15);
+  text-shadow: 0 0 12px rgba(var(--focus-ring-rgb), 0.2);
   font-size: 1.4rem;
   font-weight: 800;
   transition: color 0.3s ease, text-shadow 0.3s ease, font-size 0.3s ease;
@@ -794,13 +833,13 @@ body.night-mode .schedule-list-wrapper::-webkit-scrollbar-thumb {
 .schedule-date-group.active-date-group .schedule-card {
   background: color-mix(in srgb, var(--highlight-active) 8%, var(--card-bg));
   border-color: color-mix(in srgb, var(--highlight-active) 50%, var(--card-border));
-  box-shadow: 0 2px 14px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 2px 14px rgba(var(--focus-ring-rgb), 0.15);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
 }
 
 /* 活跃分组卡片 hover */
 .schedule-date-group.active-date-group .schedule-card:hover {
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 4px 20px rgba(var(--focus-ring-rgb), 0.22);
   transform: translateY(-2px);
 }
 
@@ -845,24 +884,24 @@ body.night-mode .schedule-card:hover {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent);
-  background: rgba(26, 107, 60, 0.1);
+  background: rgba(var(--focus-ring-rgb), 0.12);
   border-radius: 4px;
   letter-spacing: 0.02em;
 }
 
 .schedule-card__group-badge--knockout {
-  color: #c0392b;
-  background: rgba(192, 57, 43, 0.1);
+  color: var(--accent-knockout);
+  background: rgba(var(--focus-ring-rgb), 0.1);
 }
 
 body.night-mode .schedule-card__group-badge {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.12);
+  color: var(--accent-alt);
+  background: rgba(var(--focus-ring-rgb), 0.15);
 }
 
 body.night-mode .schedule-card__group-badge--knockout {
-  color: #f87171;
-  background: rgba(248, 113, 113, 0.12);
+  color: var(--accent-knockout);
+  background: rgba(var(--focus-ring-rgb), 0.12);
 }
 
 /* 对战球队 */
@@ -907,12 +946,8 @@ body.night-mode .schedule-card__group-badge--knockout {
 }
 
 .schedule-card__local-time {
-  color: #3498db;
+  color: var(--local-time-color);
   font-weight: 500;
-}
-
-body.night-mode .schedule-card__local-time {
-  color: #60a5fa;
 }
 
 .schedule-card__venue {
@@ -929,11 +964,7 @@ body.night-mode .schedule-card__local-time {
 }
 
 .schedule-loading--error {
-  color: #c0392b;
-}
-
-body.night-mode .schedule-loading--error {
-  color: #f87171;
+  color: var(--accent-knockout);
 }
 
 /* ================================================================
@@ -962,7 +993,7 @@ body.night-mode .schedule-loading--error {
 }
 
 body.night-mode .schedule-timezone-hint {
-  background: #1a2332;
+  background: var(--countdown-bg);
   border-left-color: var(--accent);
 }
 
@@ -988,7 +1019,7 @@ body.night-mode .schedule-timezone-hint {
 
 .schedule-filter-select {
   padding: 6px 10px;
-  border: 1px solid #d5d8dc;
+  border: 1px solid var(--filter-border);
   border-radius: 5px;
   font-size: 0.85rem;
   background: var(--bg-primary);
@@ -1000,18 +1031,18 @@ body.night-mode .schedule-timezone-hint {
 .schedule-filter-select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.15);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 
 body.night-mode .schedule-filter-select {
-  border-color: #334155;
-  background: #1a2332;
-  color: #e2e8f0;
+  border-color: var(--border-light);
+  background: var(--countdown-bg);
+  color: var(--text-primary);
 }
 
 body.night-mode .schedule-filter-select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.15);
+  box-shadow: var(--filter-focus-shadow-day);
 }
 
 /* 滚动列表容器 */
@@ -1019,6 +1050,8 @@ body.night-mode .schedule-filter-select:focus {
   max-height: 620px;
   overflow-y: auto;
   padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .schedule-list-wrapper::-webkit-scrollbar {
@@ -1030,12 +1063,12 @@ body.night-mode .schedule-filter-select:focus {
 }
 
 .schedule-list-wrapper::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 body.night-mode .schedule-list-wrapper::-webkit-scrollbar-thumb {
-  background: #4a5568;
+  background: var(--scrollbar-thumb);
 }
 
 /* ================================================================
@@ -1059,13 +1092,13 @@ body.night-mode .schedule-list-wrapper::-webkit-scrollbar-thumb {
 }
 
 .schedule-minimap::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--scrollbar-thumb);
   border-radius: 2px;
 }
 
 body.night-mode .schedule-minimap {
-  background: #1a2332;
-  border-color: #2d3748;
+  background: var(--countdown-bg);
+  border-color: var(--border-light);
 }
 
 .minimap__title {
@@ -1105,11 +1138,7 @@ body.night-mode .schedule-minimap {
 }
 
 .minimap__day:hover {
-  background: rgba(44, 110, 73, 0.08);
-}
-
-body.night-mode .minimap__day:hover {
-  background: rgba(240, 185, 11, 0.08);
+  background: rgba(var(--focus-ring-rgb), 0.08);
 }
 
 .minimap__dot {
@@ -1184,3 +1213,578 @@ body.night-mode .minimap__dot {
   color: var(--text-secondary);
   font-size: 0.85rem;
 }
+
+/* ================================================================
+   球队模块 - 档案馆
+   ================================================================ */
+.teams-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.teams-search {
+  flex: 1;
+  min-width: 280px;
+  max-width: 460px;
+  padding: 10px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teams-search::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.65;
+}
+
+.teams-search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--filter-focus-shadow-day);
+}
+
+body.night-mode .teams-search {
+  background: var(--countdown-bg);
+  border-color: var(--border-light);
+}
+
+body.night-mode .teams-search:focus {
+  border-color: var(--accent);
+  box-shadow: var(--filter-focus-shadow-day);
+}
+
+/* 大洲筛选按钮 */
+.teams-continent-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.continent-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.continent-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.continent-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+body.night-mode .continent-btn {
+  background: var(--countdown-bg);
+  border-color: var(--border-light);
+  color: var(--text-secondary);
+}
+
+body.night-mode .continent-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+body.night-mode .continent-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ================================================================
+   球队卡片网格
+   ================================================================ */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* 球队卡片设计 */
+.teams-grid .team-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.teams-grid .team-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--accent);
+}
+
+body.night-mode .teams-grid .team-card {
+  background: var(--countdown-bg);
+  border-color: var(--border-light);
+}
+
+body.night-mode .teams-grid .team-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.teams-grid .team-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.teams-grid .team-card__flag {
+  width: 64px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.teams-grid .team-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.teams-grid .team-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teams-grid .team-card__code {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: "SF Mono", "Fira Code", monospace;
+  letter-spacing: 0.06em;
+}
+
+.teams-grid .team-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+}
+
+.teams-grid .team-card__rank {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.teams-grid .team-card__group-tag {
+  font-size: 0.78rem;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+body.night-mode .teams-grid .team-card__group-tag {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ================================================================
+   球队详情浮层（Overlay + Modal）
+   ================================================================ */
+.modal-overlay {
+  display: none;            /* 默认隐藏 */
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay[style*="display: flex"] {
+  display: flex;
+}
+
+.team-modal {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+}
+
+body.night-mode .team-modal {
+  background: var(--bg-secondary);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.team-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.team-modal::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+/* 关闭按钮 */
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+body.night-mode .modal-close {
+  background: var(--countdown-bg);
+}
+
+/* 模态内容 */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-team-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.modal-team-flag {
+  width: 96px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.modal-team-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* 元数据网格 */
+.modal-team-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+body.night-mode .modal-meta-item {
+  background: var(--countdown-bg);
+}
+
+.modal-meta-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modal-meta-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 简介 */
+.modal-team-intro {
+  padding: 14px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+body.night-mode .modal-team-intro {
+  background: var(--countdown-bg);
+}
+
+.modal-team-intro p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  text-wrap: pretty;
+}
+
+/* 球员名单 */
+.modal-team-players {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.player-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.player-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+body.night-mode .player-tag {
+  background: var(--countdown-bg);
+  border-color: var(--border-light);
+}
+
+.player-tag:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}/* ================================================================
+   仪表盘增强样式
+   ================================================================ */
+
+/* ---------- 1. 动态背景光点 ---------- */
+.dashboard-bg-orbital {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.38;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 70%);
+}
+
+.bg-dot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1.5px);
+  animation: bgOrbit var(--orbit-duration, 18s) linear infinite;
+}
+
+.bg-dot--1 { width: 180px; height: 180px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); top: 12%; left: 8%; --orbit-duration: 22s; animation-delay: 0s; }
+.bg-dot--2 { width: 120px; height: 120px; background: radial-gradient(circle, var(--color-france, #c95d3a) 0%, transparent 70%); top: 55%; left: 72%; --orbit-duration: 19s; animation-delay: -5s; }
+.bg-dot--3 { width: 90px; height: 90px; background: radial-gradient(circle, var(--color-argentina, #5a8f4e) 0%, transparent 70%); top: 72%; left: 18%; --orbit-duration: 16s; animation-delay: -9s; }
+.bg-dot--4 { width: 140px; height: 140px; background: radial-gradient(circle, var(--color-brazil, #4a7cbf) 0%, transparent 70%); top: 28%; left: 58%; --orbit-duration: 24s; animation-delay: -3s; }
+.bg-dot--5 { width: 100px; height: 100px; background: radial-gradient(circle, var(--accent-secondary, #d4a017) 0%, transparent 70%); top: 8%; left: 38%; --orbit-duration: 20s; animation-delay: -12s; }
+.bg-dot--6 { width: 160px; height: 160px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%); top: 45%; left: 22%; --orbit-duration: 26s; animation-delay: -7s; }
+
+@keyframes bgOrbit {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.08); }
+  50% { transform: translate(-15px, 25px) scale(0.94); }
+  75% { transform: translate(-25px, -15px) scale(1.04); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+body.night-mode .dashboard-bg-orbital { opacity: 0.22; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-dot { animation: none; }
+}
+
+/* ---------- 2. 欢迎横幅 ---------- */
+.welcome-banner {
+  flex: 1; min-width: 220px; padding: 16px 20px;
+  background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+body.night-mode .welcome-banner { background: var(--countdown-bg); }
+.welcome-banner__text {
+  font-size: 1.05rem; font-weight: 600; color: var(--text-primary);
+  letter-spacing: 0.02em; text-wrap: pretty; transition: opacity 0.5s ease;
+}
+
+/* ---------- 3. 倒计时 + 欢迎横幅同行 ---------- */
+.dashboard-right-top-row {
+  display: flex; gap: 14px; align-items: stretch; flex-wrap: wrap;
+}
+.dashboard-right-top-row #countdown { flex: 0 0 auto; min-width: 200px; }
+
+/* ---------- 4. 焦点新闻卡片 ---------- */
+.focus-news { padding: 20px 24px; margin-top: 14px; }
+.focus-news__header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.focus-news__title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+.focus-news__more { font-size: 0.82rem; color: var(--accent); text-decoration: none; font-weight: 500; transition: opacity 0.2s ease; }
+.focus-news__more:hover { opacity: 0.75; text-decoration: underline; }
+.focus-news__list { display: flex; flex-direction: column; gap: 12px; }
+.focus-news__loading { color: var(--text-secondary); font-size: 0.9rem; }
+.focus-news-item { padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.focus-news-item:last-child { border-bottom: none; }
+.focus-news-item__title { font-size: 0.98rem; font-weight: 600; color: var(--text-primary); margin: 0 0 4px 0; line-height: 1.45; }
+.focus-news-item__title a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+.focus-news-item__title a:hover { color: var(--accent); }
+.focus-news-item__meta { font-size: 0.78rem; color: var(--text-secondary); }
+
+/* ---------- 5. 今日赛程摘要 ---------- */
+.today-schedule { padding: 20px 24px; margin-top: 14px; }
+.today-schedule__title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 14px 0; }
+.today-schedule__body { display: flex; flex-direction: column; gap: 12px; }
+.today-match-item {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: 10px; transition: background 0.25s ease, border-color 0.25s ease;
+}
+body.night-mode .today-match-item { background: var(--countdown-bg); }
+.today-match-item:hover { border-color: var(--accent); }
+.today-match__time { font-size: 0.88rem; font-weight: 600; color: var(--accent); white-space: nowrap; min-width: 70px; }
+.today-match__teams { flex: 1; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
+.today-match__venue { font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
+.today-schedule__footer { margin-top: 12px; text-align: right; }
+.today-schedule__link { font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; cursor: pointer; transition: opacity 0.2s ease; }
+.today-schedule__link:hover { opacity: 0.75; text-decoration: underline; }
+.today-schedule--empty { color: var(--text-secondary); font-size: 0.9rem; text-align: center; padding: 16px 0; }
+
+/* ---------- 6. 快捷入口网格 ---------- */
+.quick-entry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; padding: 0 4px; }
+.quick-card {
+  display: flex; align-items: center; gap: 10px; padding: 16px 20px;
+  background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: 12px; cursor: pointer; user-select: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.quick-card:hover, .quick-card:focus-visible { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.quick-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+body.night-mode .quick-card { background: var(--countdown-bg); }
+body.night-mode .quick-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+.quick-card svg { flex-shrink: 0; color: var(--accent); }
+.quick-card__label { font-size: 0.92rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+/* ---------- 7. 主队信息卡扩展 ---------- */
+.team-card__extras { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light); }
+.team-card-extras__loading { color: var(--text-secondary); font-size: 0.85rem; }
+.team-card-group-schedule { margin-bottom: 14px; }
+.team-card-group-schedule__title { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0; }
+.team-card-group-match { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px; background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 8px; font-size: 0.85rem; }
+body.night-mode .team-card-group-match { background: var(--countdown-bg); }
+.team-card-group-match__teams { font-weight: 600; color: var(--text-primary); }
+.team-card-group-match__date { font-size: 0.78rem; color: var(--text-secondary); }
+.team-card-group-match__status { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: var(--accent); color: #fff; }
+.team-card-prediction { padding: 12px 14px; background: var(--bg-primary); border: 1px dashed var(--border-light); border-radius: 10px; }
+.team-card-prediction__title { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin: 0 0 6px 0; }
+.team-card-prediction__rank { font-size: 1.6rem; font-weight: 800; color: var(--accent); margin: 4px 0; }
+.team-card-prediction__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0; }
+.team-card-setup-hint { padding: 14px; background: var(--bg-primary); border: 1px solid var(--border-light); border-radius: 10px; text-align: center; }
+.team-card-setup-hint__text { font-size: 0.88rem; color: var(--text-secondary); margin: 0 0 8px 0; }
+.team-card-setup-hint__link { font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease; }
+.team-card-setup-hint__link:hover { opacity: 0.75; text-decoration: underline; }
+
+/* ---------- 8. 场馆地图缩小版 ---------- */
+.venue-map--compact { padding: 16px 20px; }
+.venue-map--compact .map-canvas { max-height: 220px; overflow: hidden; border-radius: 8px; transition: max-height 0.4s ease; }
+.venue-map--compact .map-canvas:hover { max-height: 360px; }
+.venue-map__explore { margin-top: 14px; display: flex; justify-content: center; }
+.venue-explore-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px;
+  font-size: 0.9rem; font-weight: 600; color: var(--accent); background: transparent;
+  border: 1.5px solid var(--accent); border-radius: 24px; cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.venue-explore-btn:hover { background: var(--accent); color: #fff; }
+.venue-explore-btn svg { flex-shrink: 0; }
+
+/* ---------- 9. 场馆浮层 ---------- */
+.venue-overlay {
+  position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  animation: venueFadeIn 0.25s ease;
+}
+@keyframes venueFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.venue-overlay__panel {
+  width: min(680px, 92vw); max-height: 78vh; background: var(--bg-primary);
+  border: 1px solid var(--border-light); border-radius: 16px; padding: 24px 28px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18); overflow-y: auto;
+  animation: venueSlideUp 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@keyframes venueSlideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+body.night-mode .venue-overlay__panel { box-shadow: 0 12px 48px rgba(0,0,0,0.45); }
+.venue-overlay__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-light); }
+.venue-overlay__title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+.venue-overlay__close {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; padding: 0; background: transparent;
+  border: 1px solid var(--border-light); border-radius: 50%; color: var(--text-primary);
+  cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease;
+}
+.venue-overlay__close:hover { background: var(--bg-secondary); border-color: var(--accent); }
+.venue-overlay__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.venue-overlay-item { padding: 14px 16px; background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 10px; transition: border-color 0.2s ease; }
+body.night-mode .venue-overlay-item { background: var(--countdown-bg); }
+.venue-overlay-item:hover { border-color: var(--accent); }
+.venue-overlay-item__name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0 0 4px 0; }
+.venue-overlay-item__city { font-size: 0.82rem; color: var(--text-secondary); margin: 0 0 6px 0; }
+.venue-overlay-item__meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--text-secondary); }
+.venue-overlay-item__meta span { display: flex; align-items: center; gap: 4px; }
