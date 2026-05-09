@@ -69,6 +69,12 @@
   /* 本地时间色 */
   --local-time-color: #4a7cbf;
 
+  /* 时区图片卡片 */
+  --timezone-img-bg: #fcf8f2;
+  --timezone-img-border: #e0d5c8;
+  --timezone-img-caption: #706658;
+  --timezone-img-overlay: rgba(0, 0, 0, 0.04);
+
   /* 筛选器 */
   --filter-border: #d0c8ba;
   --filter-focus-shadow-day: 0 0 0 3px rgba(201, 93, 58, 0.18);
@@ -121,6 +127,12 @@ body.night-mode {
 
   /* 本地时间色 */
   --local-time-color: #7ab8f5;
+
+  /* 时区图片卡片 */
+  --timezone-img-bg: #18233a;
+  --timezone-img-border: #2a3a55;
+  --timezone-img-caption: #9e917d;
+  --timezone-img-overlay: rgba(255, 255, 255, 0.03);
 
   /* 筛选器 */
   --filter-border: #2a3a55;
@@ -641,6 +653,77 @@ body.night-mode .select-input:focus {
   color: var(--timezone-offset);
   font-weight: 500;
   margin-top: 4px;
+}
+
+/* ================================================================
+   时区图片堆叠
+   ================================================================ */
+.timezone-images-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.timezone-img-card {
+  flex: 1 1 180px;
+  min-width: 160px;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  background: var(--timezone-img-bg);
+  border: 1px solid var(--timezone-img-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.3s ease;
+}
+
+.timezone-img-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent);
+}
+
+body.night-mode .timezone-img-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.timezone-img-card__figure {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  background: var(--timezone-img-overlay);
+  overflow: hidden;
+}
+
+.timezone-img-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+
+.timezone-img-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.timezone-img-card__caption {
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--timezone-img-caption);
+  line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
 /* ================================================================
