@@ -2160,35 +2160,107 @@ body.night-mode .champion-card { background: var(--nav-bg); }
   border-radius: 12px; padding: 24px;
 }
 body.night-mode .classic-matches { background: var(--countdown-bg); }
+
+/* 顶部：标题 + 筛选按钮行 */
+.classic-matches__header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+  margin-bottom: 18px;
+}
 .classic-matches__title {
-  font-size: 1.15rem; font-weight: 700; margin: 0 0 16px 0; color: var(--accent);
+  font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--accent);
+  white-space: nowrap;
 }
-.classic-matches__list {
-  display: flex; flex-direction: column; gap: 12px;
+.classic-matches__filters {
+  display: flex; flex-wrap: wrap; gap: 6px;
 }
+.classic-matches__filter-btn {
+  padding: 5px 14px; border: 1px solid var(--border-light); border-radius: 20px;
+  font-size: 0.78rem; font-weight: 500; background: var(--bg-primary);
+  color: var(--text-secondary); cursor: pointer; font-family: inherit;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+body.night-mode .classic-matches__filter-btn { background: var(--countdown-bg); }
+.classic-matches__filter-btn:hover {
+  border-color: var(--accent); color: var(--text-primary); transform: translateY(-1px);
+}
+.classic-matches__filter-btn--active,
+.classic-matches__filter-btn--active:hover {
+  background: var(--accent); color: #fff; border-color: var(--accent); transform: none;
+}
+
+/* 横向滚动容器（与冠军墙一致） */
+.classic-matches__scroll {
+  overflow-x: auto; overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+.classic-matches__scroll::-webkit-scrollbar { height: 6px; }
+.classic-matches__scroll::-webkit-scrollbar-track { background: transparent; }
+.classic-matches__scroll::-webkit-scrollbar-thumb {
+  background: var(--accent); border-radius: 3px;
+}
+.classic-matches__scroll::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+
+.classic-matches__inner {
+  display: flex; gap: 16px; padding-bottom: 8px;
+}
+
+/* 单张比赛卡片 */
 .classic-match-card {
+  flex: 0 0 280px; width: 280px;
   background: var(--bg-primary); border: 1px solid var(--border-light);
-  border-radius: 8px; padding: 16px 20px;
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px;
-  transition: border-color 0.2s ease;
+  border-radius: 10px; padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
 }
 body.night-mode .classic-match-card { background: var(--nav-bg); }
-.classic-match-card:hover { border-color: var(--accent); }
+.classic-match-card:hover {
+  border-color: var(--accent); transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* 2022 决赛卡片金色边框强调 */
+.classic-match-card--featured {
+  border: 2px solid #d4a853;
+}
+body.night-mode .classic-match-card--featured { border-color: #f4a261; }
+.classic-match-card--featured:hover { border-color: #d4a853; }
+body.night-mode .classic-match-card--featured:hover { border-color: #e6b800; }
+
+/* 卡片顶部：年份 + 阶段标签 */
+.classic-match-card__top {
+  display: flex; align-items: center; gap: 10px;
+}
 .classic-match-card__year {
-  font-size: 0.85rem; font-weight: 700; color: var(--accent); min-width: 52px;
+  font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 0.03em;
 }
 .classic-match-card__stage {
-  font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); min-width: 72px;
+  font-size: 0.75rem; font-weight: 500; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 10px; padding: 2px 10px;
+  opacity: 0.85;
 }
+
+/* 卡片中部：对阵双方 + 比分 */
 .classic-match-card__matchup {
-  font-size: 0.95rem; font-weight: 700; color: var(--text-primary); flex: 1; min-width: 180px;
+  font-size: 0.95rem; font-weight: 700; color: var(--text-primary);
+  letter-spacing: 0.02em; line-height: 1.3;
 }
 .classic-match-card__score {
-  font-size: 0.95rem; font-weight: 800; color: var(--accent); min-width: 56px; text-align: right;
+  font-size: 1.35rem; font-weight: 800; color: var(--accent);
+  letter-spacing: 0.04em; line-height: 1.2;
 }
-.classic-match-card__summary {
-  font-size: 0.82rem; color: var(--text-secondary); width: 100%; margin-top: 4px;
-  text-wrap: pretty;
+
+/* 卡片底部：经典事件 + 举办地 */
+.classic-match-card__event {
+  font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55;
+  text-wrap: pretty; flex: 1;
+}
+.classic-match-card__venue {
+  font-size: 0.72rem; color: var(--text-secondary); opacity: 0.7;
+  padding-top: 2px; border-top: 1px solid var(--border-light);
 }
 
 /* --- 冠军墙滚动容器 --- */

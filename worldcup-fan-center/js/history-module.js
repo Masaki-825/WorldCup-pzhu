@@ -24,6 +24,7 @@
       stage: '决赛',
       teams: '乌拉圭 vs 巴西',
       score: '2-1',
+      venue: '巴西 里约热内卢',
       desc: '马拉卡纳惨案——巴西在主场马拉卡纳体育场近20万观众面前，先进一球后被乌拉圭连扳两球逆转，痛失冠军。这场比赛改变了巴西足球的历史轨迹，白色球衣自此被弃用。'
     },
     {
@@ -31,6 +32,7 @@
       stage: '决赛',
       teams: '巴西 vs 意大利',
       score: '4-1',
+      venue: '墨西哥 墨西哥城',
       desc: '贝利时代的巅峰之战，巴西4-1大胜意大利永久保留雷米特杯。卡洛斯-阿尔贝托的凌空抽射破门被誉为世界杯历史上最伟大的团队进球。'
     },
     {
@@ -38,6 +40,7 @@
       stage: '1/4决赛',
       teams: '阿根廷 vs 英格兰',
       score: '2-1',
+      venue: '墨西哥 墨西哥城',
       desc: '马拉多纳的"上帝之手"和"世纪进球"同场诞生。先用手球破门引发争议，随后连过五人打入历史最佳进球，一己之力淘汰英格兰。'
     },
     {
@@ -45,6 +48,7 @@
       stage: '决赛',
       teams: '法国 vs 巴西',
       score: '3-0',
+      venue: '法国 圣但尼',
       desc: '齐达内两记头球破门，法国本土首夺世界杯。赛前罗纳尔多突发晕厥事件至今仍是未解之谜，巴西全队失常成就了法国足球的黄金时刻。'
     },
     {
@@ -52,6 +56,7 @@
       stage: '决赛',
       teams: '意大利 vs 法国',
       score: '1-1 (点球5-3)',
+      venue: '德国 柏林',
       desc: '齐达内职业生涯最后一场比赛，用一记勺子点球首开纪录，却在加时赛头顶马特拉齐被红牌罚下。与大力神杯擦肩而过的背影成为世界杯最经典的影像。'
     },
     {
@@ -59,6 +64,7 @@
       stage: '半决赛',
       teams: '德国 vs 巴西',
       score: '7-1',
+      venue: '巴西 贝洛奥里藏特',
       desc: '米内罗惨案——东道主巴西在贝洛奥里藏特遭遇队史最惨痛失利。德国在29分钟内连入五球，克洛泽超越罗纳尔多成为世界杯历史射手王。'
     },
     {
@@ -66,6 +72,7 @@
       stage: '决赛',
       teams: '阿根廷 vs 法国',
       score: '3-3 (点球4-2)',
+      venue: '卡塔尔 卢赛尔',
       desc: '世界杯历史上最伟大的决赛之一。梅西梅开二度，姆巴佩帽子戏法，双方120分钟内战成3-3。阿根廷点球大战获胜，梅西终获世界杯冠军。'
     },
     {
@@ -73,6 +80,7 @@
       stage: '1/8决赛',
       teams: '法国 vs 阿根廷',
       score: '4-3',
+      venue: '俄罗斯 喀山',
       desc: '姆巴佩横空出世之战——19岁的他用速度摧毁了阿根廷防线，独造三球（两球+造点）。一场七球盛宴标志法国新生代全面接管世界足坛。'
     }
   ];
@@ -150,27 +158,92 @@
      经典比赛回顾
      ================================================================ */
 
+  /**
+   * 年代区间定义
+   */
+  var eraRanges = [
+    { label: '全部',  start: 0,    end: 9999 },
+    { label: '1930s', start: 1930, end: 1939 },
+    { label: '1950s', start: 1950, end: 1959 },
+    { label: '1970s', start: 1970, end: 1979 },
+    { label: '1990s', start: 1990, end: 1999 },
+    { label: '2010s', start: 2010, end: 9999 }
+  ];
+
+  var currentEraFilter = '全部';
+
+  function renderEraButtons() {
+    var btnContainer = safeGetById('classic-matches-filters');
+    if (!btnContainer) return;
+
+    var btnsHtml = '';
+    for (var i = 0; i < eraRanges.length; i++) {
+      var era = eraRanges[i];
+      var activeClass = (era.label === currentEraFilter) ? ' classic-matches__filter-btn--active' : '';
+      btnsHtml += '<button class="classic-matches__filter-btn' + activeClass + '" data-era="' + era.label + '">' + era.label + '</button>';
+    }
+    btnContainer.innerHTML = btnsHtml;
+
+    // 绑定点击
+    var buttons = btnContainer.querySelectorAll('.classic-matches__filter-btn');
+    for (var j = 0; j < buttons.length; j++) {
+      buttons[j].addEventListener('click', function () {
+        currentEraFilter = this.getAttribute('data-era');
+        renderEraButtons();
+        renderClassicMatches();
+      });
+    }
+  }
+
+  function getFilteredMatches() {
+    var era = null;
+    for (var i = 0; i < eraRanges.length; i++) {
+      if (eraRanges[i].label === currentEraFilter) {
+        era = eraRanges[i];
+        break;
+      }
+    }
+
+    return classicMatches.filter(function (m) {
+      return m.year >= era.start && m.year <= era.end;
+    });
+  }
+
   function renderClassicMatches() {
     var container = safeGetById('classic-matches-list');
     if (!container) return;
 
-    var html = '<div class="classic-matches__inner">';
+    var filtered = getFilteredMatches();
 
-    for (var i = 0; i < classicMatches.length; i++) {
-      var m = classicMatches[i];
+    if (!filtered.length) {
+      container.innerHTML = '<p class="classic-matches__empty">该年代暂无经典比赛记录。</p>';
+      return;
+    }
 
-      html += '<div class="classic-match-card">';
-      html += '<div class="classic-match-card__header">';
+    var html = '';
+    for (var i = 0; i < filtered.length; i++) {
+      var m = filtered[i];
+      var is2022Final = (m.year === 2022 && m.stage === '决赛');
+      var cardClass = 'classic-match-card';
+      if (is2022Final) {
+        cardClass += ' classic-match-card--featured';
+      }
+
+      html += '<div class="' + cardClass + '">';
+      // 顶部行：年份 + 阶段标签
+      html += '<div class="classic-match-card__top">';
       html += '<span class="classic-match-card__year">' + m.year + '</span>';
       html += '<span class="classic-match-card__stage">' + m.stage + '</span>';
       html += '</div>';
+      // 中部：对阵 + 比分
       html += '<p class="classic-match-card__matchup">' + m.teams + '</p>';
       html += '<p class="classic-match-card__score">' + m.score + '</p>';
-      html += '<p class="classic-match-card__summary">' + m.desc + '</p>';
+      // 底部：事件描述 + 举办地
+      html += '<p class="classic-match-card__event">' + m.desc + '</p>';
+      html += '<p class="classic-match-card__venue">' + m.venue + '</p>';
       html += '</div>';
     }
 
-    html += '</div>';
     container.innerHTML = html;
   }
 
@@ -245,6 +318,7 @@
 
   function initHistory() {
     loadChampionsWall();
+    renderEraButtons();
     renderClassicMatches();
     loadTrivia();
     bindTriviaButton();

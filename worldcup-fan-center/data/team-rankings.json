@@ -1,0 +1,611 @@
+{
+  "MEX": {
+    "name": "墨西哥",
+    "rankings": [
+      { "year": 1930, "rank": 13 },
+      { "year": 1950, "rank": 12 },
+      { "year": 1954, "rank": 13 },
+      { "year": 1958, "rank": 16 },
+      { "year": 1962, "rank": 11 },
+      { "year": 1966, "rank": 12 },
+      { "year": 1970, "rank": 6 },
+      { "year": 1978, "rank": 16 },
+      { "year": 1986, "rank": 6 },
+      { "year": 1994, "rank": 13 },
+      { "year": 1998, "rank": 13 },
+      { "year": 2002, "rank": 11 },
+      { "year": 2006, "rank": 15 },
+      { "year": 2010, "rank": 14 },
+      { "year": 2014, "rank": 10 },
+      { "year": 2018, "rank": 12 },
+      { "year": 2022, "rank": 22 }
+    ]
+  },
+  "URU": {
+    "name": "乌拉圭",
+    "rankings": [
+      { "year": 1930, "rank": 1 },
+      { "year": 1950, "rank": 1 },
+      { "year": 1954, "rank": 4 },
+      { "year": 1962, "rank": 13 },
+      { "year": 1966, "rank": 7 },
+      { "year": 1970, "rank": 4 },
+      { "year": 1974, "rank": 13 },
+      { "year": 1986, "rank": 16 },
+      { "year": 1990, "rank": 16 },
+      { "year": 2002, "rank": 26 },
+      { "year": 2010, "rank": 4 },
+      { "year": 2014, "rank": 12 },
+      { "year": 2018, "rank": 5 },
+      { "year": 2022, "rank": 20 }
+    ]
+  },
+  "NGA": {
+    "name": "尼日利亚",
+    "rankings": [
+      { "year": 1994, "rank": 9 },
+      { "year": 1998, "rank": 12 },
+      { "year": 2002, "rank": 27 },
+      { "year": 2010, "rank": 27 },
+      { "year": 2014, "rank": 16 },
+      { "year": 2018, "rank": 22 }
+    ],
+    "notes": "2022年未晋级决赛圈"
+  },
+  "FRA": {
+    "name": "法国",
+    "rankings": [
+      { "year": 1930, "rank": 7 },
+      { "year": 1934, "rank": 9 },
+      { "year": 1938, "rank": 6 },
+      { "year": 1954, "rank": 11 },
+      { "year": 1958, "rank": 3 },
+      { "year": 1966, "rank": 13 },
+      { "year": 1978, "rank": 12 },
+      { "year": 1982, "rank": 4 },
+      { "year": 1986, "rank": 3 },
+      { "year": 1998, "rank": 1 },
+      { "year": 2002, "rank": 28 },
+      { "year": 2006, "rank": 2 },
+      { "year": 2010, "rank": 29 },
+      { "year": 2014, "rank": 7 },
+      { "year": 2018, "rank": 1 },
+      { "year": 2022, "rank": 2 }
+    ]
+  },
+  "SEN": {
+    "name": "塞内加尔",
+    "rankings": [
+      { "year": 2002, "rank": 7 },
+      { "year": 2018, "rank": 17 },
+      { "year": 2022, "rank": 10 }
+    ]
+  },
+  "PER": {
+    "name": "秘鲁",
+    "rankings": [
+      { "year": 1930, "rank": 10 },
+      { "year": 1970, "rank": 7 },
+      { "year": 1978, "rank": 8 },
+      { "year": 1982, "rank": 20 },
+      { "year": 2018, "rank": 20 }
+    ]
+  },
+  "ARG": {
+    "name": "阿根廷",
+    "rankings": [
+      { "year": 1930, "rank": 2 },
+      { "year": 1934, "rank": 9 },
+      { "year": 1958, "rank": 13 },
+      { "year": 1962, "rank": 10 },
+      { "year": 1966, "rank": 5 },
+      { "year": 1974, "rank": 8 },
+      { "year": 1978, "rank": 1 },
+      { "year": 1982, "rank": 11 },
+      { "year": 1986, "rank": 1 },
+      { "year": 1990, "rank": 2 },
+      { "year": 1994, "rank": 10 },
+      { "year": 1998, "rank": 6 },
+      { "year": 2002, "rank": 18 },
+      { "year": 2006, "rank": 6 },
+      { "year": 2010, "rank": 5 },
+      { "year": 2014, "rank": 2 },
+      { "year": 2018, "rank": 16 },
+      { "year": 2022, "rank": 1 }
+    ]
+  },
+  "GER": {
+    "name": "德国",
+    "rankings": [
+      { "year": 1934, "rank": 3 },
+      { "year": 1938, "rank": 10 },
+      { "year": 1954, "rank": 1 },
+      { "year": 1958, "rank": 4 },
+      { "year": 1962, "rank": 7 },
+      { "year": 1966, "rank": 2 },
+      { "year": 1970, "rank": 3 },
+      { "year": 1974, "rank": 1 },
+      { "year": 1978, "rank": 6 },
+      { "year": 1982, "rank": 2 },
+      { "year": 1986, "rank": 2 },
+      { "year": 1990, "rank": 1 },
+      { "year": 1994, "rank": 5 },
+      { "year": 1998, "rank": 7 },
+      { "year": 2002, "rank": 2 },
+      { "year": 2006, "rank": 3 },
+      { "year": 2010, "rank": 3 },
+      { "year": 2014, "rank": 1 },
+      { "year": 2018, "rank": 22 },
+      { "year": 2022, "rank": 17 }
+    ],
+    "notes": "含西德时期（1950-1990）数据；1930年未参赛，1950年被禁止参赛"
+  },
+  "ALG": {
+    "name": "阿尔及利亚",
+    "rankings": [
+      { "year": 1982, "rank": 13 },
+      { "year": 1986, "rank": 22 },
+      { "year": 2010, "rank": 28 },
+      { "year": 2014, "rank": 14 }
+    ],
+    "notes": "2022年未晋级决赛圈"
+  },
+  "USA": {
+    "name": "美国",
+    "rankings": [
+      { "year": 1930, "rank": 3 },
+      { "year": 1934, "rank": 16 },
+      { "year": 1950, "rank": 10 },
+      { "year": 1990, "rank": 23 },
+      { "year": 1994, "rank": 15 },
+      { "year": 1998, "rank": 32 },
+      { "year": 2002, "rank": 8 },
+      { "year": 2006, "rank": 25 },
+      { "year": 2010, "rank": 12 },
+      { "year": 2014, "rank": 15 },
+      { "year": 2022, "rank": 14 }
+    ]
+  },
+  "CRO": {
+    "name": "克罗地亚",
+    "rankings": [
+      { "year": 1998, "rank": 3 },
+      { "year": 2002, "rank": 23 },
+      { "year": 2006, "rank": 22 },
+      { "year": 2014, "rank": 19 },
+      { "year": 2018, "rank": 2 },
+      { "year": 2022, "rank": 3 }
+    ],
+    "notes": "1990年之前为南斯拉夫一部分，FIFA将克罗地亚视为独立纪录"
+  },
+  "QAT": {
+    "name": "卡塔尔",
+    "rankings": [
+      { "year": 2022, "rank": 32 }
+    ]
+  },
+  "ESP": {
+    "name": "西班牙",
+    "rankings": [
+      { "year": 1934, "rank": 5 },
+      { "year": 1950, "rank": 4 },
+      { "year": 1962, "rank": 12 },
+      { "year": 1966, "rank": 10 },
+      { "year": 1978, "rank": 10 },
+      { "year": 1982, "rank": 12 },
+      { "year": 1986, "rank": 7 },
+      { "year": 1990, "rank": 10 },
+      { "year": 1994, "rank": 8 },
+      { "year": 1998, "rank": 17 },
+      { "year": 2002, "rank": 5 },
+      { "year": 2006, "rank": 9 },
+      { "year": 2010, "rank": 1 },
+      { "year": 2014, "rank": 23 },
+      { "year": 2018, "rank": 10 },
+      { "year": 2022, "rank": 13 }
+    ]
+  },
+  "JPN": {
+    "name": "日本",
+    "rankings": [
+      { "year": 1998, "rank": 31 },
+      { "year": 2002, "rank": 9 },
+      { "year": 2006, "rank": 28 },
+      { "year": 2010, "rank": 9 },
+      { "year": 2014, "rank": 29 },
+      { "year": 2018, "rank": 15 },
+      { "year": 2022, "rank": 9 }
+    ]
+  },
+  "EGY": {
+    "name": "埃及",
+    "rankings": [
+      { "year": 1934, "rank": 13 },
+      { "year": 1990, "rank": 20 },
+      { "year": 2018, "rank": 31 }
+    ]
+  },
+  "ENG": {
+    "name": "英格兰",
+    "rankings": [
+      { "year": 1950, "rank": 8 },
+      { "year": 1954, "rank": 7 },
+      { "year": 1958, "rank": 11 },
+      { "year": 1962, "rank": 8 },
+      { "year": 1966, "rank": 1 },
+      { "year": 1970, "rank": 8 },
+      { "year": 1982, "rank": 6 },
+      { "year": 1986, "rank": 8 },
+      { "year": 1990, "rank": 4 },
+      { "year": 1998, "rank": 9 },
+      { "year": 2002, "rank": 6 },
+      { "year": 2006, "rank": 7 },
+      { "year": 2010, "rank": 13 },
+      { "year": 2014, "rank": 26 },
+      { "year": 2018, "rank": 4 },
+      { "year": 2022, "rank": 6 }
+    ]
+  },
+  "MAR": {
+    "name": "摩洛哥",
+    "rankings": [
+      { "year": 1970, "rank": 14 },
+      { "year": 1986, "rank": 11 },
+      { "year": 1994, "rank": 23 },
+      { "year": 1998, "rank": 18 },
+      { "year": 2018, "rank": 27 },
+      { "year": 2022, "rank": 4 }
+    ]
+  },
+  "PAN": {
+    "name": "巴拿马",
+    "rankings": [
+      { "year": 2018, "rank": 32 }
+    ]
+  },
+  "BRA": {
+    "name": "巴西",
+    "rankings": [
+      { "year": 1930, "rank": 6 },
+      { "year": 1934, "rank": 14 },
+      { "year": 1938, "rank": 3 },
+      { "year": 1950, "rank": 2 },
+      { "year": 1954, "rank": 6 },
+      { "year": 1958, "rank": 1 },
+      { "year": 1962, "rank": 1 },
+      { "year": 1966, "rank": 11 },
+      { "year": 1970, "rank": 1 },
+      { "year": 1974, "rank": 4 },
+      { "year": 1978, "rank": 3 },
+      { "year": 1982, "rank": 5 },
+      { "year": 1986, "rank": 5 },
+      { "year": 1990, "rank": 9 },
+      { "year": 1994, "rank": 1 },
+      { "year": 1998, "rank": 2 },
+      { "year": 2002, "rank": 1 },
+      { "year": 2006, "rank": 5 },
+      { "year": 2010, "rank": 6 },
+      { "year": 2014, "rank": 4 },
+      { "year": 2018, "rank": 6 },
+      { "year": 2022, "rank": 7 }
+    ],
+    "notes": "唯一全勤球队，22届世界杯全部参赛"
+  },
+  "DEN": {
+    "name": "丹麦",
+    "rankings": [
+      { "year": 1986, "rank": 9 },
+      { "year": 1998, "rank": 8 },
+      { "year": 2002, "rank": 10 },
+      { "year": 2010, "rank": 24 },
+      { "year": 2018, "rank": 11 },
+      { "year": 2022, "rank": 28 }
+    ]
+  },
+  "CIV": {
+    "name": "科特迪瓦",
+    "rankings": [
+      { "year": 2006, "rank": 19 },
+      { "year": 2010, "rank": 17 },
+      { "year": 2014, "rank": 21 }
+    ]
+  },
+  "NED": {
+    "name": "荷兰",
+    "rankings": [
+      { "year": 1934, "rank": 9 },
+      { "year": 1938, "rank": 14 },
+      { "year": 1974, "rank": 2 },
+      { "year": 1978, "rank": 2 },
+      { "year": 1990, "rank": 15 },
+      { "year": 1994, "rank": 7 },
+      { "year": 1998, "rank": 4 },
+      { "year": 2006, "rank": 11 },
+      { "year": 2010, "rank": 2 },
+      { "year": 2014, "rank": 3 },
+      { "year": 2022, "rank": 5 }
+    ]
+  },
+  "AUS": {
+    "name": "澳大利亚",
+    "rankings": [
+      { "year": 1974, "rank": 14 },
+      { "year": 2006, "rank": 16 },
+      { "year": 2010, "rank": 21 },
+      { "year": 2014, "rank": 30 },
+      { "year": 2018, "rank": 30 },
+      { "year": 2022, "rank": 11 }
+    ]
+  },
+  "CHN": {
+    "name": "中国",
+    "rankings": [
+      { "year": 2002, "rank": 31 }
+    ]
+  },
+  "POR": {
+    "name": "葡萄牙",
+    "rankings": [
+      { "year": 1966, "rank": 3 },
+      { "year": 1986, "rank": 17 },
+      { "year": 2002, "rank": 21 },
+      { "year": 2006, "rank": 4 },
+      { "year": 2010, "rank": 11 },
+      { "year": 2014, "rank": 18 },
+      { "year": 2018, "rank": 13 },
+      { "year": 2022, "rank": 8 }
+    ]
+  },
+  "POL": {
+    "name": "波兰",
+    "rankings": [
+      { "year": 1938, "rank": 11 },
+      { "year": 1974, "rank": 3 },
+      { "year": 1978, "rank": 5 },
+      { "year": 1982, "rank": 3 },
+      { "year": 1986, "rank": 14 },
+      { "year": 2002, "rank": 25 },
+      { "year": 2006, "rank": 21 },
+      { "year": 2018, "rank": 25 },
+      { "year": 2022, "rank": 15 }
+    ]
+  },
+  "ECU": {
+    "name": "厄瓜多尔",
+    "rankings": [
+      { "year": 2002, "rank": 24 },
+      { "year": 2006, "rank": 12 },
+      { "year": 2014, "rank": 17 },
+      { "year": 2022, "rank": 18 }
+    ]
+  },
+  "ITA": {
+    "name": "意大利",
+    "rankings": [
+      { "year": 1934, "rank": 1 },
+      { "year": 1938, "rank": 1 },
+      { "year": 1950, "rank": 7 },
+      { "year": 1954, "rank": 10 },
+      { "year": 1962, "rank": 9 },
+      { "year": 1966, "rank": 9 },
+      { "year": 1970, "rank": 2 },
+      { "year": 1974, "rank": 10 },
+      { "year": 1978, "rank": 4 },
+      { "year": 1982, "rank": 1 },
+      { "year": 1986, "rank": 12 },
+      { "year": 1990, "rank": 3 },
+      { "year": 1994, "rank": 2 },
+      { "year": 1998, "rank": 5 },
+      { "year": 2002, "rank": 15 },
+      { "year": 2006, "rank": 1 },
+      { "year": 2010, "rank": 26 },
+      { "year": 2014, "rank": 22 }
+    ],
+    "notes": "2018年、2022年未晋级决赛圈"
+  },
+  "CMR": {
+    "name": "喀麦隆",
+    "rankings": [
+      { "year": 1982, "rank": 17 },
+      { "year": 1990, "rank": 7 },
+      { "year": 1994, "rank": 22 },
+      { "year": 1998, "rank": 25 },
+      { "year": 2002, "rank": 20 },
+      { "year": 2010, "rank": 31 },
+      { "year": 2014, "rank": 32 },
+      { "year": 2022, "rank": 19 }
+    ]
+  },
+  "BEL": {
+    "name": "比利时",
+    "rankings": [
+      { "year": 1930, "rank": 11 },
+      { "year": 1934, "rank": 15 },
+      { "year": 1938, "rank": 13 },
+      { "year": 1954, "rank": 12 },
+      { "year": 1970, "rank": 10 },
+      { "year": 1982, "rank": 10 },
+      { "year": 1986, "rank": 4 },
+      { "year": 1990, "rank": 11 },
+      { "year": 1994, "rank": 11 },
+      { "year": 1998, "rank": 19 },
+      { "year": 2002, "rank": 14 },
+      { "year": 2014, "rank": 6 },
+      { "year": 2018, "rank": 3 },
+      { "year": 2022, "rank": 23 }
+    ]
+  },
+  "KOR": {
+    "name": "韩国",
+    "rankings": [
+      { "year": 1954, "rank": 16 },
+      { "year": 1986, "rank": 20 },
+      { "year": 1990, "rank": 22 },
+      { "year": 1994, "rank": 20 },
+      { "year": 1998, "rank": 30 },
+      { "year": 2002, "rank": 4 },
+      { "year": 2006, "rank": 17 },
+      { "year": 2010, "rank": 15 },
+      { "year": 2014, "rank": 27 },
+      { "year": 2018, "rank": 19 },
+      { "year": 2022, "rank": 16 }
+    ]
+  },
+  "SER": {
+    "name": "塞尔维亚",
+    "rankings": [
+      { "year": 1930, "rank": 4 },
+      { "year": 1950, "rank": 5 },
+      { "year": 1954, "rank": 8 },
+      { "year": 1958, "rank": 5 },
+      { "year": 1962, "rank": 4 },
+      { "year": 1974, "rank": 7 },
+      { "year": 1982, "rank": 16 },
+      { "year": 1990, "rank": 5 },
+      { "year": 1998, "rank": 10 },
+      { "year": 2006, "rank": 32 },
+      { "year": 2010, "rank": 23 },
+      { "year": 2018, "rank": 23 },
+      { "year": 2022, "rank": 29 }
+    ],
+    "notes": "FIFA将南斯拉夫（1930-1990）、塞黑（1998-2006）纪录归于塞尔维亚名下"
+  },
+  "UAE": {
+    "name": "阿联酋",
+    "rankings": [
+      { "year": 1990, "rank": 24 }
+    ]
+  },
+  "COL": {
+    "name": "哥伦比亚",
+    "rankings": [
+      { "year": 1962, "rank": 14 },
+      { "year": 1990, "rank": 14 },
+      { "year": 1994, "rank": 19 },
+      { "year": 1998, "rank": 21 },
+      { "year": 2014, "rank": 5 },
+      { "year": 2018, "rank": 9 }
+    ]
+  },
+  "SUI": {
+    "name": "瑞士",
+    "rankings": [
+      { "year": 1934, "rank": 7 },
+      { "year": 1938, "rank": 7 },
+      { "year": 1950, "rank": 6 },
+      { "year": 1954, "rank": 5 },
+      { "year": 1962, "rank": 16 },
+      { "year": 1966, "rank": 16 },
+      { "year": 1994, "rank": 16 },
+      { "year": 2006, "rank": 10 },
+      { "year": 2010, "rank": 19 },
+      { "year": 2014, "rank": 11 },
+      { "year": 2018, "rank": 14 },
+      { "year": 2022, "rank": 12 }
+    ]
+  },
+  "CAN": {
+    "name": "加拿大",
+    "rankings": [
+      { "year": 1986, "rank": 24 },
+      { "year": 2022, "rank": 31 }
+    ]
+  },
+  "UZB": {
+    "name": "乌兹别克斯坦",
+    "rankings": [],
+    "notes": "从未晋级世界杯决赛圈，2026年有望首秀"
+  },
+  "JAM": {
+    "name": "牙买加",
+    "rankings": [
+      { "year": 1998, "rank": 22 }
+    ]
+  },
+  "GRE": {
+    "name": "希腊",
+    "rankings": [
+      { "year": 1994, "rank": 24 },
+      { "year": 2010, "rank": 25 },
+      { "year": 2014, "rank": 13 }
+    ]
+  },
+  "CRC": {
+    "name": "哥斯达黎加",
+    "rankings": [
+      { "year": 1990, "rank": 13 },
+      { "year": 2002, "rank": 19 },
+      { "year": 2006, "rank": 31 },
+      { "year": 2014, "rank": 8 },
+      { "year": 2018, "rank": 29 },
+      { "year": 2022, "rank": 27 }
+    ]
+  },
+  "TUR": {
+    "name": "土耳其",
+    "rankings": [
+      { "year": 1954, "rank": 9 },
+      { "year": 2002, "rank": 3 }
+    ]
+  },
+  "VEN": {
+    "name": "委内瑞拉",
+    "rankings": [],
+    "notes": "南美洲唯一从未晋级世界杯决赛圈的球队，2026年有望首秀"
+  },
+  "KSA": {
+    "name": "沙特阿拉伯",
+    "rankings": [
+      { "year": 1994, "rank": 12 },
+      { "year": 1998, "rank": 28 },
+      { "year": 2002, "rank": 32 },
+      { "year": 2006, "rank": 28 },
+      { "year": 2018, "rank": 26 },
+      { "year": 2022, "rank": 25 }
+    ]
+  },
+  "UKR": {
+    "name": "乌克兰",
+    "rankings": [
+      { "year": 2006, "rank": 8 }
+    ]
+  },
+  "GHA": {
+    "name": "加纳",
+    "rankings": [
+      { "year": 2006, "rank": 13 },
+      { "year": 2010, "rank": 7 },
+      { "year": 2014, "rank": 25 },
+      { "year": 2022, "rank": 24 }
+    ]
+  },
+  "IRN": {
+    "name": "伊朗",
+    "rankings": [
+      { "year": 1978, "rank": 14 },
+      { "year": 1998, "rank": 20 },
+      { "year": 2006, "rank": 25 },
+      { "year": 2014, "rank": 28 },
+      { "year": 2018, "rank": 18 },
+      { "year": 2022, "rank": 26 }
+    ]
+  },
+  "WAL": {
+    "name": "威尔士",
+    "rankings": [
+      { "year": 1958, "rank": 6 },
+      { "year": 2022, "rank": 30 }
+    ]
+  },
+  "TUN": {
+    "name": "突尼斯",
+    "rankings": [
+      { "year": 1978, "rank": 9 },
+      { "year": 1998, "rank": 26 },
+      { "year": 2002, "rank": 29 },
+      { "year": 2006, "rank": 24 },
+      { "year": 2018, "rank": 24 },
+      { "year": 2022, "rank": 21 }
+    ]
+  }
+}

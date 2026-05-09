@@ -447,9 +447,16 @@
 
         <!-- 经典比赛回顾 -->
         <div class="classic-matches" id="classic-matches">
-          <h3 class="classic-matches__title">经典比赛回顾</h3>
-          <div class="classic-matches__list" id="classic-matches-list">
-            <!-- 由 history-module.js 动态渲染 -->
+          <div class="classic-matches__header">
+            <h3 class="classic-matches__title">经典比赛回顾</h3>
+            <div class="classic-matches__filters" id="classic-matches-filters">
+              <!-- 由 history-module.js 动态渲染筛选按钮 -->
+            </div>
+          </div>
+          <div class="classic-matches__scroll" id="classic-matches-scroll">
+            <div class="classic-matches__inner" id="classic-matches-list">
+              <!-- 由 history-module.js 动态渲染卡片 -->
+            </div>
           </div>
         </div>
 
