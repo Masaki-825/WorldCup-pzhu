@@ -328,9 +328,9 @@ section h2 {
 /* ========================================
    字体大小预设（通过 body[data-font-size] 切换）
    ======================================== */
-body[data-font-size="small"] { --font-base: 14px; }
-body[data-font-size="medium"] { --font-base: 16px; }
-body[data-font-size="large"] { --font-base: 18px; }
+body[data-font-size="small"] { font-size: 14px; }
+body[data-font-size="medium"] { font-size: 16px; }
+body[data-font-size="large"] { font-size: 18px; }
 
 /* ========================================
    设置面板
@@ -2383,3 +2383,4 @@ body.night-mode .music-item { background: var(--nav-bg); }
 .music-item__artist {
   font-size: 0.78rem; color: var(--text-secondary);
 }
+

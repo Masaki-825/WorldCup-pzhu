@@ -209,9 +209,10 @@
    * 应用字体大小
    * @param {string} size - 'small' | 'medium' | 'large'
    */
-  function applyFontSize(size) {
-    document.body.setAttribute('data-font-size', size);
-    storageSet(STORAGE_KEY_FONT_SIZE, size);
+   function applyFontSize(size) {
+     document.body.setAttribute('data-font-size', size);
+     document.body.style.fontSize = '';
+     storageSet(STORAGE_KEY_FONT_SIZE, size);
 
     // 更新标签文字
     if (fontSizeLabel) {
