@@ -56,31 +56,23 @@
             </div>
           </div>
 
-          <!-- 时区下方图片堆叠 -->
-          <div class="timezone-images-stack">
-            <div class="timezone-img-card">
-              <figure class="timezone-img-card__figure">
-                <img
-                  src="assets/brazil-2002-champions.avif"
-                  alt="巴西队2002年韩日世界杯夺冠瞬间"
-                  class="timezone-img-card__img"
-                  loading="lazy"
-                  onerror="this.src='https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?w=600&h=400&fit=crop&auto=format'"
-                >
-              </figure>
-              <p class="timezone-img-card__caption">荣耀的传承</p>
+          <!-- 图片填充区域：占据时区表下方全部剩余空间 -->
+          <div class="timezone-images-fill">
+            <div class="timezone-image-card">
+              <img
+                src="assets/brazil-2002-champions.avif"
+                alt="巴西队2002年韩日世界杯夺冠瞬间"
+                loading="lazy"
+                onerror="this.src='https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?w=600&h=400&fit=crop&auto=format'"
+              >
             </div>
-            <div class="timezone-img-card">
-              <figure class="timezone-img-card__figure">
-                <img
-                  src="assets/mexico-fans-celebration.avif"
-                  alt="墨西哥球迷热烈欢庆"
-                  class="timezone-img-card__img"
-                  loading="lazy"
-                  onerror="this.src='https://images.pexels.com/photos/114296/pexels-photo-114296.jpeg?w=600&h=400&fit=crop&auto=format'"
-                >
-              </figure>
-              <p class="timezone-img-card__caption">跨越时区，陪你见证每一刻</p>
+            <div class="timezone-image-card">
+              <img
+                src="assets/mexico-fans-celebration.avif"
+                alt="墨西哥球迷热烈欢庆"
+                loading="lazy"
+                onerror="this.src='https://images.pexels.com/photos/114296/pexels-photo-114296.jpeg?w=600&h=400&fit=crop&auto=format'"
+              >
             </div>
           </div>
         </div>
@@ -321,32 +313,191 @@
     <!-- 积分对阵模块 -->
     <section id="standings" style="display: none;">
       <h2>积分对阵</h2>
-      <div class="module-container">
-        <!-- 后续放入：小组积分表、淘汰赛对阵图等 -->
+      <div class="module-container standings-container">
+
+        <!-- 顶部说明卡 -->
+        <div class="standings-intro">
+          <h3>赛制说明</h3>
+          <p>2026年世界杯首次扩军至<strong>48支球队</strong>，分为 <strong>16个小组（A-P）</strong>，每组3支球队。小组赛采用单循环赛制，每队进行2场比赛。每组<strong>前两名</strong>共32支球队晋级淘汰赛，展开1/16决赛直至决赛的激烈角逐。</p>
+        </div>
+
+        <!-- 小组选项卡 -->
+        <div class="standings-tabs" id="standings-tabs">
+          <!-- 由 standings.js 动态渲染 -->
+        </div>
+
+        <!-- 积分表区 -->
+        <div class="standings-table-wrapper">
+          <table class="standings-table" id="standings-table">
+            <thead>
+              <tr>
+                <th>排名</th>
+                <th>队名</th>
+                <th>赛</th>
+                <th>胜</th>
+                <th>平</th>
+                <th>负</th>
+                <th>进/失球</th>
+                <th>净胜球</th>
+                <th>积分</th>
+              </tr>
+            </thead>
+            <tbody id="standings-tbody">
+              <!-- 由 standings.js 动态渲染 -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 淘汰赛对阵图 -->
+        <div class="bracket-section">
+          <h3>淘汰赛对阵图</h3>
+          <div class="bracket-tree" id="bracket-tree">
+            <!-- 由 standings.js 动态渲染 -->
+          </div>
+        </div>
+
+        <!-- 路径推演工具 -->
+        <div class="path-finder" id="path-finder">
+          <h3>路径推演</h3>
+          <div class="path-finder__controls">
+            <label class="path-finder__label">
+              选择球队：
+              <select id="path-team-select" class="select-input">
+                <!-- 由 standings.js 动态填充 -->
+              </select>
+            </label>
+            <label class="path-finder__label">
+              小组排名：
+              <select id="path-rank-select" class="select-input">
+                <option value="1">第1名（A1等）</option>
+                <option value="2">第2名（A2等）</option>
+              </select>
+            </label>
+            <button id="path-view-btn" class="btn btn--primary" type="button">查看路径</button>
+            <button id="path-reset-btn" class="btn btn--secondary" type="button">重置</button>
+          </div>
+          <div class="path-finder__result" id="path-result">
+            <!-- 推演结果文字展示 -->
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- 预测模块 -->
+    <!-- 预测擂台模块 -->
     <section id="predictions" style="display: none;">
-      <h2>预测</h2>
-      <div class="module-container">
-        <!-- 后续放入：比赛结果预测、数据分析、投票等 -->
+      <h2>预测擂台</h2>
+      <div class="predictions-container">
+
+        <!-- 每日一猜 -->
+        <div class="daily-guess" id="daily-guess">
+          <h3 class="daily-guess__title">每日一猜</h3>
+          <p class="daily-guess__subtitle">揭幕战焦点对决，猜对比分赢取荣耀</p>
+          <div class="daily-guess__match" id="daily-guess-match">
+            <!-- 由 predictions.js 动态渲染 -->
+          </div>
+          <div class="daily-guess__inputs" id="daily-guess-inputs">
+            <!-- 由 predictions.js 动态渲染 -->
+          </div>
+          <div class="daily-guess__actions" id="daily-guess-actions">
+            <!-- 由 predictions.js 动态渲染 -->
+          </div>
+          <div class="daily-guess__submitted" id="daily-guess-submitted" style="display: none;">
+            <!-- 由 predictions.js 动态渲染 -->
+          </div>
+        </div>
+
+        <!-- 完整预测表单 -->
+        <div class="full-prediction" id="full-prediction">
+          <h3 class="full-prediction__title">完整预测</h3>
+          <p class="full-prediction__subtitle">预测所有小组出线球队与淘汰赛晋级路径</p>
+          <div class="full-prediction__section" id="prediction-groups">
+            <!-- 由 predictions.js 动态渲染：16组小组出线预测 -->
+          </div>
+          <div class="full-prediction__section" id="prediction-knockout">
+            <!-- 由 predictions.js 动态渲染：淘汰赛预测 -->
+          </div>
+          <div class="full-prediction__save">
+            <button id="prediction-save-btn" class="btn btn--primary" type="button">保存全部预测</button>
+          </div>
+        </div>
+
+        <!-- 准确率展示区 -->
+        <div class="prediction-accuracy" id="prediction-accuracy">
+          <h3 class="prediction-accuracy__title">预测准确率</h3>
+          <p class="prediction-accuracy__placeholder">比赛尚未开始，开幕后可查看准确率</p>
+        </div>
+
       </div>
     </section>
 
-    <!-- 历史模块 -->
+    <!-- 历史博物馆模块 -->
     <section id="history" style="display: none;">
-      <h2>历史</h2>
-      <div class="module-container">
-        <!-- 后续放入：历届世界杯数据、经典回顾、纪录等 -->
+      <h2>历史博物馆</h2>
+      <div class="history-container">
+
+        <!-- 冠军墙 -->
+        <div class="champions-wall" id="champions-wall">
+          <h3 class="champions-wall__title">冠军墙</h3>
+          <p class="champions-wall__subtitle">1930 - 2022，二十二届世界杯，二十二个冠军故事</p>
+          <div class="champions-wall__scroll" id="champions-scroll">
+            <!-- 由 history-module.js 动态渲染 -->
+          </div>
+        </div>
+
+        <!-- 经典比赛回顾 -->
+        <div class="classic-matches" id="classic-matches">
+          <h3 class="classic-matches__title">经典比赛回顾</h3>
+          <div class="classic-matches__list" id="classic-matches-list">
+            <!-- 由 history-module.js 动态渲染 -->
+          </div>
+        </div>
+
+        <!-- 冷知识盒子 -->
+        <div class="trivia-box" id="trivia-box">
+          <h3 class="trivia-box__title">冷知识</h3>
+          <div class="trivia-box__content" id="trivia-content">
+            <!-- 由 history-module.js 动态渲染 -->
+          </div>
+          <button id="trivia-next-btn" class="btn btn--secondary" type="button">换一条</button>
+        </div>
+
       </div>
     </section>
 
-    <!-- 社区模块 -->
+    <!-- 社区与周刊模块 -->
     <section id="community" style="display: none;">
-      <h2>社区</h2>
-      <div class="module-container">
-        <!-- 后续放入：球迷讨论区、帖子列表、热评等 -->
+      <h2>社区与周刊</h2>
+      <div class="community-container">
+
+        <!-- 主题周刊 + 社区墙 -->
+        <div class="community-top">
+          <!-- 主题周刊（左侧） -->
+          <div class="weekly-article" id="weekly-article">
+            <h3 class="weekly-article__title">2026世界杯新赛制深度解读：48队如何走向冠军</h3>
+            <div class="weekly-article__body" id="weekly-article-body">
+              <!-- 由 community.js 动态渲染 -->
+            </div>
+            <p class="weekly-article__date">发布日期：2026年5月</p>
+          </div>
+
+          <!-- 球迷社区墙（右侧） -->
+          <div class="fan-wall" id="fan-wall">
+            <h3 class="fan-wall__title">球迷社区墙</h3>
+            <div class="fan-wall__grid" id="fan-wall-grid">
+              <!-- 由 community.js 动态渲染 -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 足球音乐盒 -->
+        <div class="music-box" id="music-box">
+          <h3 class="music-box__title">世界杯之声</h3>
+          <div class="music-box__list" id="music-box-list">
+            <!-- 由 community.js 动态渲染 -->
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -419,5 +570,9 @@
   <script src="js/schedule.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/teams.js"></script>
+  <script src="js/standings.js"></script>
+  <script src="js/predictions.js"></script>
+  <script src="js/history-module.js"></script>
+  <script src="js/community.js"></script>
 </body>
 </html>
