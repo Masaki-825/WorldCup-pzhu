@@ -4,7 +4,7 @@
  *
  * 功能：
  * 1. 每日一猜：揭幕战比分预测，localStorage 持久化
- * 2. 完整预测：16组小组出线 + 淘汰赛晋级路径
+ * 2. 小组出线预测：左右双栏（左55%勾选区 + 右45%图表区），16行对齐
  * 3. 准确率展示区
  */
 (function () {
@@ -61,7 +61,6 @@
   function getOpenerMatch() {
     var schedule = window.__SCHEDULE_DATA__;
     if (!schedule || !schedule.length) return null;
-    // 揭幕战：第一场有对阵队伍的比赛
     for (var i = 0; i < schedule.length; i++) {
       if (schedule[i].teams && schedule[i].teams.length >= 2) {
         return schedule[i];
@@ -85,7 +84,6 @@
     var date = match.date || '';
     var time = match.time || '';
 
-    // 对阵信息区
     document.getElementById('daily-guess-match').innerHTML =
       '<div class="daily-guess__matchup">' +
         '<span class="daily-guess__team daily-guess__team--home">' + homeName + '</span>' +
@@ -94,11 +92,9 @@
       '</div>' +
       '<p class="daily-guess__meta">' + phase + ' / ' + date + ' ' + time + ' (UTC+8)</p>';
 
-    // 检查是否已提交
     var saved = safeGetJSON(STORAGE_KEY_DAILY);
 
     if (saved && saved.matchId === match.id) {
-      // 已提交状态
       document.getElementById('daily-guess-inputs').style.display = 'none';
       document.getElementById('daily-guess-actions').style.display = 'none';
       var submittedEl = document.getElementById('daily-guess-submitted');
@@ -112,7 +108,6 @@
         renderDailyGuess();
       });
     } else {
-      // 未提交状态
       document.getElementById('daily-guess-inputs').style.display = '';
       document.getElementById('daily-guess-actions').style.display = '';
       document.getElementById('daily-guess-submitted').style.display = 'none';
@@ -154,54 +149,76 @@
   }
 
   /* ================================================================
-     完整预测表单
+     小组出线预测 - 左右双栏布局
+     左 55%：16组勾选区（每行 3px 实线分隔，第8行后 6px）
+     右 45%：图表卡片区（与左侧一一对齐）
      ================================================================ */
 
   var groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
 
-  var knockoutPhases = [
-    { id: 'round32', name: '1/16决赛', matchCount: 16 },
-    { id: 'round16', name: '1/8决赛', matchCount: 8 },
-    { id: 'quarter', name: '1/4决赛', matchCount: 4 },
-    { id: 'semi', name: '半决赛', matchCount: 2 },
-    { id: 'final', name: '决赛', matchCount: 1 }
-  ];
-
-  function renderGroupPredictions() {
-    var container = document.getElementById('prediction-groups');
-    var saved = safeGetJSON(STORAGE_KEY_FULL);
-    var savedGroups = (saved && saved.groups) ? saved.groups : {};
-
-    var html = '<h4 class="full-prediction__section-title">小组出线预测</h4>';
-    html += '<p class="full-prediction__section-hint">每组3支球队，选择2支晋级球队</p>';
-    html += '<div class="prediction-groups-grid">';
-
-    for (var g = 0; g < groups.length; g++) {
-      var group = groups[g];
-      var teams = getGroupTeams(group);
-      var checked = savedGroups[group] || [];
-
-      html += '<div class="prediction-group-card" data-group="' + group + '">';
-      html += '<h5 class="prediction-group-card__title">' + group + '组</h5>';
-
-      for (var t = 0; t < teams.length; t++) {
-        var team = teams[t];
-        var isChecked = checked.indexOf(team.id) !== -1;
-        html += '<label class="prediction-group-checkbox">' +
-          '<input type="checkbox" class="prediction-group-input" data-group="' + group + '" data-team="' + team.id + '"' +
-          (isChecked ? ' checked' : '') + '>' +
-          '<span class="prediction-group-team-name">' + team.name + '</span>' +
-        '</label>';
-      }
-
-      html += '<p class="prediction-group-count" data-group="' + group + '">已选 ' + checked.length + '/2</p>';
-      html += '</div>';
+  /**
+   * 渲染单张图表卡片
+   * @param {string} teamId 球队ID
+   * @param {number} totalSelected 该组已选球队数（1 或 2）
+   */
+  function renderChartCard(teamId, totalSelected) {
+    var teamName = getTeamName(teamId);
+    var chartMap = window.__CHART_MAP__ || {};
+    var base64 = chartMap[teamId];
+    var cardClass = 'prediction-chart-card';
+    if (totalSelected === 1) {
+      cardClass += ' prediction-chart-card--single';
+    } else {
+      cardClass += ' prediction-chart-card--dual';
     }
 
-    html += '</div>';
-    container.innerHTML = html;
+    var html = '<div class="' + cardClass + '" data-team="' + teamId + '">';
+    html += '<div class="prediction-chart-card__header">' + teamName + '</div>';
+    html += '<div class="prediction-chart-card__body">';
 
-    // 绑定复选框限制逻辑
+    if (base64 && base64.indexOf('data:image/png;base64,') === 0) {
+      html += '<img src="' + base64 + '" alt="' + teamName + ' 历史排名图表" class="prediction-chart-card__img" loading="lazy" onerror="this.parentElement.innerHTML=\'<p class=\\\'prediction-chart-card__error\\\'>暂无历史数据</p>\'">';
+    } else if (base64) {
+      html += '<img src="' + base64 + '" alt="' + teamName + ' 历史排名图表" class="prediction-chart-card__img" loading="lazy" onerror="this.parentElement.innerHTML=\'<p class=\\\'prediction-chart-card__error\\\'>暂无历史数据</p>\'">';
+    } else {
+      html += '<p class="prediction-chart-card__error">暂无历史数据</p>';
+    }
+
+    html += '</div></div>';
+    return html;
+  }
+
+  /**
+   * 更新指定组的右侧图表行
+   */
+  function updateChartRow(group) {
+    var row = document.getElementById('chart-row-' + group);
+    if (!row) return;
+
+    var container = document.getElementById('prediction-groups');
+    if (!container) return;
+
+    var checkboxes = container.querySelectorAll('.prediction-group-input[data-group="' + group + '"]:checked');
+    var selectedTeams = [];
+    for (var c = 0; c < checkboxes.length; c++) {
+      selectedTeams.push(checkboxes[c].getAttribute('data-team'));
+    }
+
+    var html = '';
+    if (selectedTeams.length === 0) {
+      html = '<div class="prediction-chart-empty" data-group="' + group + '"></div>';
+    } else {
+      for (var s = 0; s < selectedTeams.length; s++) {
+        html += renderChartCard(selectedTeams[s], selectedTeams.length);
+      }
+    }
+    row.innerHTML = html;
+  }
+
+  /**
+   * 绑定复选框变更事件
+   */
+  function bindGroupCheckboxEvents(container) {
     var allCheckboxes = container.querySelectorAll('.prediction-group-input');
     for (var c = 0; c < allCheckboxes.length; c++) {
       allCheckboxes[c].addEventListener('change', function () {
@@ -211,6 +228,7 @@
         for (var b = 0; b < groupBoxes.length; b++) {
           if (groupBoxes[b].checked) checkedCount++;
         }
+        // 每组最多选 2 支
         if (checkedCount > 2) {
           this.checked = false;
           checkedCount--;
@@ -220,148 +238,85 @@
         if (countEl) {
           countEl.textContent = '已选 ' + checkedCount + '/2';
         }
+        // 同步更新右侧图表
+        updateChartRow(group);
       });
     }
   }
 
-  function renderKnockoutPredictions() {
-    var container = document.getElementById('prediction-knockout');
+  function renderGroupPredictions() {
+    var container = document.getElementById('prediction-groups');
     var saved = safeGetJSON(STORAGE_KEY_FULL);
-    var savedKnockout = (saved && saved.knockout) ? saved.knockout : {};
     var savedGroups = (saved && saved.groups) ? saved.groups : {};
 
-    var html = '<h4 class="full-prediction__section-title">淘汰赛晋级预测</h4>';
-    html += '<p class="full-prediction__section-hint">预测从1/16决赛到冠军的晋级路径</p>';
+    var html = '<div class="prediction-groups-cards">';
 
-    // 构建小组出线后的对阵表（基于小组名次）
-    var roundMatches = generateBracketMatches(savedGroups);
+    for (var g = 0; g < groups.length; g++) {
+      var group = groups[g];
+      var teams = getGroupTeams(group);
+      var checked = savedGroups[group] || [];
+      var cardClass = 'prediction-group-card';
+      if (g === 7) cardClass += ' prediction-group-card--major';
 
-    for (var p = 0; p < knockoutPhases.length; p++) {
-      var phase = knockoutPhases[p];
-      var phaseKey = phase.id;
-      var phaseSaved = savedKnockout[phaseKey] || [];
+      // ---- 整张组卡片 ----
+      html += '<div class="' + cardClass + '" data-group="' + group + '">';
 
-      html += '<div class="prediction-knockout-phase">';
-      html += '<h5 class="prediction-knockout-phase__title">' + phase.name + '</h5>';
-      html += '<div class="prediction-knockout-matches">';
-
-      for (var m = 0; m < phase.matchCount; m++) {
-        var matchKey = phaseKey + '-' + m;
-        var teamA = roundMatches[phaseKey] ? (roundMatches[phaseKey][m] ? roundMatches[phaseKey][m][0] : null) : null;
-        var teamB = roundMatches[phaseKey] ? (roundMatches[phaseKey][m] ? roundMatches[phaseKey][m][1] : null) : null;
-
-        // 尝试从保存的结果中恢复
-        if (phaseSaved[m]) {
-          teamA = phaseSaved[m][0];
-          teamB = phaseSaved[m][1];
-        }
-
-        var teamAName = teamA ? getTeamName(teamA) : '待定';
-        var teamBName = teamB ? getTeamName(teamB) : '待定';
-        var selectedWinner = '';
-
-        // 检查是否已有选择
-        var allSavedKnockout = safeGetJSON(STORAGE_KEY_FULL);
-        if (allSavedKnockout && allSavedKnockout.knockout && allSavedKnockout.knockout.winners) {
-          selectedWinner = allSavedKnockout.knockout.winners[matchKey] || '';
-        }
-
-        html += '<div class="prediction-knockout-match" data-match="' + matchKey + '">';
-        html += '<span class="prediction-knockout-team' + (selectedWinner === 'A' ? ' prediction-knockout-team--winner' : '') + '" data-match="' + matchKey + '" data-side="A">' + teamAName + '</span>';
-        html += '<span class="prediction-knockout-vs">vs</span>';
-        html += '<span class="prediction-knockout-team' + (selectedWinner === 'B' ? ' prediction-knockout-team--winner' : '') + '" data-match="' + matchKey + '" data-side="B">' + teamBName + '</span>';
-        html += '</div>';
+      // 左侧 55%：勾选区
+      html += '<div class="prediction-group-card__left">';
+      html += '<span class="prediction-group-label">' + group + '组</span>';
+      html += '<div class="prediction-group-teams">';
+      for (var t = 0; t < teams.length; t++) {
+        var team = teams[t];
+        var isChecked = checked.indexOf(team.id) !== -1;
+        html += '<label class="prediction-group-checkbox">' +
+          '<input type="checkbox" class="prediction-group-input" data-group="' + group + '" data-team="' + team.id + '"' +
+          (isChecked ? ' checked' : '') + '>' +
+          '<span class="prediction-group-team-name">' + team.name + '</span>' +
+        '</label>';
       }
-
+      html += '<span class="prediction-group-count" data-group="' + group + '">已选 ' + checked.length + '/2</span>';
       html += '</div></div>';
+
+      // 右侧 45%：图表区
+      html += '<div class="prediction-group-card__right" data-group="' + group + '" id="chart-row-' + group + '">';
+      if (checked.length === 0) {
+        html += '<div class="prediction-chart-empty" data-group="' + group + '"></div>';
+      } else {
+        for (var rc = 0; rc < checked.length; rc++) {
+          html += renderChartCard(checked[rc], checked.length);
+        }
+      }
+      html += '</div>';
+
+      html += '</div>'; // .prediction-group-card
     }
 
+    html += '</div>'; // .prediction-groups-cards
     container.innerHTML = html;
 
-    // 绑定点击选择晋级
-    var allTeams = container.querySelectorAll('.prediction-knockout-team');
-    for (var t = 0; t < allTeams.length; t++) {
-      allTeams[t].addEventListener('click', function () {
-        var matchKey = this.getAttribute('data-match');
-        var side = this.getAttribute('data-side');
-        var matchEls = container.querySelectorAll('.prediction-knockout-team[data-match="' + matchKey + '"]');
-        for (var e = 0; e < matchEls.length; e++) {
-          matchEls[e].classList.remove('prediction-knockout-team--winner');
-        }
-        this.classList.add('prediction-knockout-team--winner');
-      });
+    // 绑定复选框事件
+    bindGroupCheckboxEvents(container);
+
+    // 绑定保存按钮
+    var saveBtn = document.getElementById('prediction-save-btn');
+    if (saveBtn) {
+      saveBtn.removeEventListener('click', saveFullPrediction);
+      saveBtn.addEventListener('click', saveFullPrediction);
     }
   }
 
-  function generateBracketMatches(groupsData) {
-    var matches = {
-      round32: [],
-      round16: [],
-      quarter: [],
-      semi: [],
-      final: []
-    };
-
-    // 生成1/16决赛对阵（16场比赛，32个位置）
-    // 对阵模式：A1-B2, C1-D2, E1-F2, G1-H2, I1-J2, K1-L2, M1-N2, O1-P2
-    //           B1-A2, D1-C2, F1-E2, H1-G2, J1-I2, L1-K2, N1-M2, P1-O2
-    var pairings = [];
-
-    // 上区
-    var topPairs = [['A', 'B'], ['C', 'D'], ['E', 'F'], ['G', 'H']];
-    var bottomPairs = [['I', 'J'], ['K', 'L'], ['M', 'N'], ['O', 'P']];
-
-    function addMatch(g1, r1, g2, r2) {
-      var t1 = (groupsData[g1] && groupsData[g1].length > (r1 - 1)) ? groupsData[g1][r1 - 1] : g1 + r1;
-      var t2 = (groupsData[g2] && groupsData[g2].length > (r2 - 1)) ? groupsData[g2][r2 - 1] : g2 + r2;
-      pairings.push([t1, t2]);
-    }
-
-    // 1/16决赛
-    for (var i = 0; i < topPairs.length; i++) {
-      var pair = topPairs[i];
-      addMatch(pair[0], 1, pair[1], 2);
-      addMatch(pair[1], 1, pair[0], 2);
-    }
-    for (var j = 0; j < bottomPairs.length; j++) {
-      var bp = bottomPairs[j];
-      addMatch(bp[0], 1, bp[1], 2);
-      addMatch(bp[1], 1, bp[0], 2);
-    }
-
-    matches.round32 = pairings;
-
-    // 1/8决赛（8场）
-    matches.round16 = [];
-    for (var k = 0; k < 8; k++) {
-      matches.round16.push(['R32W' + (k * 2 + 1), 'R32W' + (k * 2 + 2)]);
-    }
-    // 1/4决赛（4场）
-    matches.quarter = [
-      ['R16W1', 'R16W2'],
-      ['R16W3', 'R16W4'],
-      ['R16W5', 'R16W6'],
-      ['R16W7', 'R16W8']
-    ];
-    // 半决赛（2场）
-    matches.semi = [
-      ['QFW1', 'QFW2'],
-      ['QFW3', 'QFW4']
-    ];
-    // 决赛（1场），季军赛不包含
-    matches.final = [['SFW1', 'SFW2']];
-
-    return matches;
-  }
+  /* ================================================================
+     保存完整预测
+     ================================================================ */
 
   function saveFullPrediction() {
     var savedGroups = {};
-    var groupCards = document.querySelectorAll('.prediction-group-card');
+    var groupRows = document.querySelectorAll('.prediction-group-row');
 
-    for (var g = 0; g < groupCards.length; g++) {
-      var card = groupCards[g];
-      var group = card.getAttribute('data-group');
-      var checkboxes = card.querySelectorAll('.prediction-group-input:checked');
+    for (var g = 0; g < groupRows.length; g++) {
+      var row = groupRows[g];
+      var group = row.getAttribute('data-group');
+      var checkboxes = row.querySelectorAll('.prediction-group-input:checked');
       var selected = [];
       for (var c = 0; c < checkboxes.length; c++) {
         selected.push(checkboxes[c].getAttribute('data-team'));
@@ -369,31 +324,28 @@
       savedGroups[group] = selected;
     }
 
-    // 收集淘汰赛选择
-    var knockoutWinners = {};
-    var winnerEls = document.querySelectorAll('.prediction-knockout-team--winner');
-    for (var w = 0; w < winnerEls.length; w++) {
-      var el = winnerEls[w];
-      var matchKey = el.getAttribute('data-match');
-      var side = el.getAttribute('data-side');
-      knockoutWinners[matchKey] = side;
-    }
-
     var prediction = {
       groups: savedGroups,
-      knockout: {
-        winners: knockoutWinners
-      },
       savedAt: new Date().toISOString()
     };
 
     safeSetJSON(STORAGE_KEY_FULL, prediction);
-    alert('预测已保存');
+
+    // 按钮反馈
+    var saveBtn = document.getElementById('prediction-save-btn');
+    if (saveBtn) {
+      var origText = saveBtn.textContent;
+      saveBtn.textContent = '已保存';
+      saveBtn.disabled = true;
+      setTimeout(function () {
+        saveBtn.textContent = origText;
+        saveBtn.disabled = false;
+      }, 1500);
+    }
   }
 
   function renderFullPrediction() {
     renderGroupPredictions();
-    renderKnockoutPredictions();
   }
 
   /* ================================================================
@@ -401,11 +353,7 @@
      ================================================================ */
 
   function renderAccuracyArea() {
-    var container = document.getElementById('prediction-accuracy');
-    if (container) {
-      // 静态占位文本，比赛开始前不变
-      // 已在 HTML 中预设
-    }
+    // 静态占位文本保留在 HTML 中，比赛开始后动态更新
   }
 
   /* ================================================================
@@ -416,12 +364,6 @@
     renderDailyGuess();
     renderFullPrediction();
     renderAccuracyArea();
-
-    // 保存按钮事件
-    var saveBtn = document.getElementById('prediction-save-btn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', saveFullPrediction);
-    }
   }
 
   /* ================================================================
