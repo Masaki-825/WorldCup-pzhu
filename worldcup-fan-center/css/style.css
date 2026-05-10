@@ -80,63 +80,71 @@
   --filter-focus-shadow-day: 0 0 0 3px rgba(201, 93, 58, 0.18);
 }
 
-/* 夜间主题 */
+/* 夜间主题 — 烈焰德比：热血红底 + 饱满鲜艳色彩 */
 body.night-mode {
-  --bg-primary: #0c1628;
-  --bg-secondary: #18233a;
+  /* 背景体系 — 深酒红底，有色彩而非死黑 */
+  --bg-primary: #2d0a0a;
+  --bg-secondary: #3d1818;
 
-  --text-primary: #e6ddd0;
-  --text-secondary: #9e917d;
+  /* 文字体系 — 高对比暖白 */
+  --text-primary: #fce8d9;
+  --text-secondary: #d4a89a;
 
-  --accent: #f4a261;
-  --accent-hover: #e08c48;
-  --accent-alt: #7ab86a;
-  --accent-knockout: #f08060;
+  /* 强调色 — 炽热红 + 荧光草绿 */
+  --accent: #ff4433;
+  --accent-hover: #e63025;
+  --accent-alt: #6bcf3a;
+  --accent-knockout: #ff6b4a;
 
-  --nav-bg: #080e1a;
-  --nav-text: #cbd5e1;
-  --nav-text-dim: #8b97a8;
-  --nav-active-border: #f4a261;
-  --nav-hover-bg: rgba(255, 255, 255, 0.06);
+  /* 导航栏 — 更深红底 + 半透红悬停 */
+  --nav-bg: #1c0505;
+  --nav-text: #fce8d9;
+  --nav-text-dim: #d4a89a;
+  --nav-active-border: #ff4433;
+  --nav-hover-bg: rgba(255, 68, 51, 0.1);
 
-  --card-bg: #18233a;
-  --card-border: #2a3a55;
+  /* 卡片体系 — 暖红褐 */
+  --card-bg: #3d1818;
+  --card-border: #5a2828;
   --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
 
-  --border-light: #2a3a55;
+  /* 通用边框 */
+  --border-light: #5a2828;
 
-  --countdown-bg: #18233a;
-  --countdown-num: #f4a261;
-  --countdown-label: #9e917d;
+  /* 倒计时 — 金橙数字凸显 */
+  --countdown-bg: #3d1818;
+  --countdown-num: #ffb347;
+  --countdown-label: #d4a89a;
 
   --font-base: 16px;
 
-  /* 活跃分组高亮色（夜间与主强调色一致） */
-  --highlight-active: #f4a261;
+  /* 活跃分组高亮色 */
+  --highlight-active: #ff4433;
 
-  /* 时区卡片 */
-  --timezone-day-bg: #2a2418;
-  --timezone-day-border: #f4a261;
-  --timezone-night-bg: #1a1e2e;
-  --timezone-night-border: #8b7fb0;
+  /* 时区卡片 — 日间暖红褐 / 夜间深紫红 */
+  --timezone-day-bg: #4a2020;
+  --timezone-day-border: #ffb347;
+  --timezone-night-bg: #2a1018;
+  --timezone-night-border: #8b5070;
+  --timezone-offset: #ff4433;
 
   /* 滚动条 & focus */
-  --scrollbar-thumb: #4a5568;
-  --focus-ring-rgb: 244, 162, 97;
+  --scrollbar-thumb: #7a3838;
+  --focus-ring-rgb: 255, 68, 51;
 
-  /* 本地时间色 */
-  --local-time-color: #7ab8f5;
+  /* 本地时间色 — 清凉蓝（唯一冷色，形成对比节奏） */
+  --local-time-color: #4a9eff;
 
   /* 时区图片卡片 */
-  --timezone-img-bg: #18233a;
-  --timezone-img-border: #2a3a55;
-  --timezone-img-caption: #9e917d;
-  --timezone-img-overlay: rgba(255, 255, 255, 0.03);
+  --timezone-img-bg: #3d1818;
+  --timezone-img-border: #5a2828;
+  --timezone-img-caption: #d4a89a;
+  --timezone-img-overlay: rgba(0, 0, 0, 0.1);
 
   /* 筛选器 */
-  --filter-border: #2a3a55;
-  --filter-focus-shadow-day: 0 0 0 3px rgba(244, 162, 97, 0.25);
+  --filter-border: #5a2828;
+  --filter-focus-shadow-day: 0 0 0 3px rgba(255, 68, 51, 0.25);
 }
 
 /* ========================================
@@ -2585,4 +2593,266 @@ body.night-mode .prediction-chart-card__header {
 /* 图表下方经典赛事回顾区域紧贴 */
 .classic-matches {
   margin-top: 0 !important;
+}
+
+/* ================================
+   主题切换按钮
+   ================================ */
+.theme-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  margin-right: 16px;
+  align-self: center;
+}
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  color: var(--nav-text);
+  stroke: var(--nav-text);
+}
+
+.team-card__match-info svg,
+.venue-overlay-item__meta svg { flex-shrink: 0; vertical-align: middle; }
+
+/* ================================
+   球迷评论区
+   ================================ */
+.fan-comments {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.fan-comments__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 14px 0;
+  color: var(--accent);
+}
+
+/* 输入表单 */
+.fan-comments__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.fan-comments__input {
+  flex: 1 1 140px;
+  min-width: 120px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.fan-comments__input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201, 93, 58, 0.15);
+}
+
+.fan-comments__input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.fan-comments__textarea {
+  flex: 2 1 300px;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 38px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  text-wrap: pretty;
+}
+
+.fan-comments__textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201, 93, 58, 0.15);
+}
+
+.fan-comments__textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.fan-comments__form .btn--primary {
+  align-self: flex-end;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  height: 38px;
+}
+
+.fan-comments__form .btn--primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.fan-comments__form .btn--primary:active {
+  transform: translateY(0);
+}
+
+.fan-comments__form .btn--primary:disabled {
+  background: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+/* textarea 错误状态（抖动反馈） */
+.fan-comments__textarea--error {
+  border-color: #d9534f !important;
+  box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.2) !important;
+  animation: commentShake 0.4s ease-in-out;
+}
+
+@keyframes commentShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(2px); }
+}
+
+/* 评论列表 */
+.fan-comments__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* 空状态 */
+.fan-comments__empty {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  opacity: 0.7;
+  text-wrap: pretty;
+}
+
+/* 单条评论 */
+.fan-comment-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: commentSlideIn 0.35s ease-out;
+}
+
+@keyframes commentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fan-comment-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.fan-comment-item__avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.fan-comment-item__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.fan-comment-item__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.fan-comment-item__nickname {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.fan-comment-item__time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.75;
+}
+
+.fan-comment-item__text {
+  font-size: 0.84rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+  text-wrap: pretty;
+  word-break: break-word;
+}
+
+/* 夜间模式适配 */
+body.night-mode .fan-comments__input,
+body.night-mode .fan-comments__textarea {
+  background: var(--countdown-bg);
+}
+
+body.night-mode .fan-comments__input:focus,
+body.night-mode .fan-comments__textarea:focus {
+  box-shadow: 0 0 0 3px rgba(201, 93, 58, 0.25);
+}
+
+body.night-mode .fan-comment-item {
+  background: var(--nav-bg);
 }

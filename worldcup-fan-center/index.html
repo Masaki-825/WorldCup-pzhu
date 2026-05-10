@@ -492,6 +492,17 @@
             <div class="fan-wall__grid" id="fan-wall-grid">
               <!-- 由 community.js 动态渲染 -->
             </div>
+
+            <!-- 球迷评论区 -->
+            <div class="fan-comments">
+              <h4 class="fan-comments__title">留下你的声音</h4>
+              <div class="fan-comments__form">
+                <input type="text" id="comment-nickname" class="fan-comments__input" placeholder="你的昵称" maxlength="20">
+                <textarea id="comment-text" class="fan-comments__textarea" placeholder="写下你的观赛感言..." maxlength="200" rows="2"></textarea>
+                <button id="comment-submit-btn" class="btn btn--primary" type="button">发布</button>
+              </div>
+              <div class="fan-comments__list" id="fan-comments-list"></div>
+            </div>
           </div>
         </div>
 

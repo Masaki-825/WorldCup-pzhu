@@ -182,6 +182,209 @@
   }
 
   /* ================================================================
+     评论区逻辑
+     ================================================================ */
+
+  var COMMENTS_KEY = 'worldcup_comments';
+
+  /**
+   * 从 localStorage 加载评论数组
+   */
+  function loadComments() {
+    try {
+      var raw = localStorage.getItem(COMMENTS_KEY);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  /**
+   * 保存评论数组到 localStorage
+   */
+  function saveComments(comments) {
+    try {
+      localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+    } catch (e) {
+      // localStorage 可能满了或被禁用，静默失败
+    }
+  }
+
+  /**
+   * 格式化相对时间
+   */
+  function formatRelativeTime(isoString) {
+    var now = Date.now();
+    var then = new Date(isoString).getTime();
+    var diffMs = now - then;
+    var diffSec = Math.floor(diffMs / 1000);
+    var diffMin = Math.floor(diffSec / 60);
+    var diffHour = Math.floor(diffMin / 60);
+    var diffDay = Math.floor(diffHour / 24);
+
+    if (diffSec < 60) return '刚刚';
+    if (diffMin < 60) return diffMin + ' 分钟前';
+    if (diffHour < 24) return diffHour + ' 小时前';
+    if (diffDay < 7) return diffDay + ' 天前';
+
+    var d = new Date(isoString);
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+    return month + '/' + day;
+  }
+
+  /**
+   * 提取首字母（取昵称第一个字符）
+   */
+  function getInitials(nickname) {
+    if (!nickname || nickname.trim().length === 0) return '匿';
+    return nickname.trim().charAt(0);
+  }
+
+  /**
+   * 渲染评论列表
+   */
+  function renderComments() {
+    var listEl = safeGetById('fan-comments-list');
+    if (!listEl) return;
+
+    var comments = loadComments();
+    // 按时间倒序（最新在上）
+    comments.sort(function (a, b) {
+      return new Date(b.time) - new Date(a.time);
+    });
+
+    if (comments.length === 0) {
+      listEl.innerHTML = '<div class="fan-comments__empty">还没有评论，快来发表你的观点吧！</div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < comments.length; i++) {
+      var c = comments[i];
+      var initials = c.initials || getInitials(c.nickname);
+      var timeStr = c.time ? formatRelativeTime(c.time) : '';
+      var safeText = escapeHtml(c.text || '');
+      var safeNick = escapeHtml(c.nickname || '匿名球迷');
+
+      html += '<div class="fan-comment-item">';
+      html += '<div class="fan-comment-item__avatar">' + initials + '</div>';
+      html += '<div class="fan-comment-item__body">';
+      html += '<div class="fan-comment-item__header">';
+      html += '<span class="fan-comment-item__nickname">' + safeNick + '</span>';
+      html += '<span class="fan-comment-item__time">' + timeStr + '</span>';
+      html += '</div>';
+      html += '<p class="fan-comment-item__text">' + safeText + '</p>';
+      html += '</div>';
+      html += '</div>';
+    }
+    listEl.innerHTML = html;
+  }
+
+  /**
+   * 简单 HTML 转义（防 XSS）
+   */
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  /**
+   * 生成唯一 ID
+   */
+  function generateId() {
+    return 'cmt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  /**
+   * 处理提交评论
+   */
+  var _commentSubmitting = false;
+
+  function handleCommentSubmit() {
+    // 防重复提交
+    if (_commentSubmitting) return;
+
+    var nicknameInput = safeGetById('comment-nickname');
+    var textInput = safeGetById('comment-text');
+    var submitBtn = safeGetById('comment-submit-btn');
+
+    if (!nicknameInput || !textInput) return;
+
+    var nickname = nicknameInput.value.trim();
+    var text = textInput.value.trim();
+
+    // 清除之前的错误状态
+    textInput.classList.remove('fan-comments__textarea--error');
+
+    // 校验
+    if (text.length === 0) {
+      textInput.classList.add('fan-comments__textarea--error');
+      textInput.focus();
+      // 3 秒后自动清除错误状态
+      setTimeout(function () {
+        textInput.classList.remove('fan-comments__textarea--error');
+      }, 3000);
+      return;
+    }
+
+    if (nickname.length === 0) {
+      nickname = '匿名球迷';
+    }
+
+    // 截断过长内容
+    if (nickname.length > 20) nickname = nickname.substr(0, 20);
+    if (text.length > 200) text = text.substr(0, 200);
+
+    // 进入提交中状态
+    _commentSubmitting = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = '发布中...';
+    }
+
+    // 构建评论对象
+    var comment = {
+      id: generateId(),
+      nickname: nickname,
+      initials: getInitials(nickname),
+      text: text,
+      time: new Date().toISOString()
+    };
+
+    // 加载现有评论，追加新评论，保存
+    var comments = loadComments();
+    comments.push(comment);
+    saveComments(comments);
+
+    // 重新渲染
+    renderComments();
+
+    // 滚动评论列表（新评论在顶部）
+    var listEl = safeGetById('fan-comments-list');
+    if (listEl) {
+      listEl.scrollTop = 0;
+    }
+
+    // 清空输入
+    textInput.value = '';
+    nicknameInput.value = '';
+
+    // 恢复按钮状态
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '发布';
+    }
+    _commentSubmitting = false;
+
+    // 焦点回到文本域
+    textInput.focus();
+  }
+
+  /* ================================================================
      初始化入口
      ================================================================ */
 
@@ -189,6 +392,25 @@
     renderWeeklyArticle();
     renderCommunityWall();
     renderMusicBox();
+    renderComments();
+
+    // 绑定评论提交事件（只绑定一次）
+    var submitBtn = safeGetById('comment-submit-btn');
+    if (submitBtn && !submitBtn._commentBound) {
+      submitBtn._commentBound = true;
+      submitBtn.addEventListener('click', handleCommentSubmit);
+
+      // 支持 Ctrl+Enter 提交
+      var textArea = safeGetById('comment-text');
+      if (textArea) {
+        textArea.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            handleCommentSubmit();
+          }
+        });
+      }
+    }
   }
 
   /* ================================================================

@@ -367,8 +367,8 @@
       html += '<span class="team-card__match-label">下一场</span>';
       html += '<div class="team-card__match-teams">' + homeName + ' vs ' + awayName + '</div>';
       html += '<div class="team-card__match-info">';
-      if (nextMatch.date) html += '[icon-calendar] ' + nextMatch.date + ' ' + (nextMatch.time || '');
-      if (nextMatch._venueName) html += ' &nbsp;|&nbsp; [icon-location] ' + nextMatch._venueName;
+      if (nextMatch.date) html += '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:3px;"><rect x="1.5" y="2.5" width="13" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 5.5h13" stroke="currentColor" stroke-width="1.5"/><path d="M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> ' + nextMatch.date + ' ' + (nextMatch.time || '');
+      if (nextMatch._venueName) html += ' &nbsp;|&nbsp; <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:3px;"><path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg> ' + nextMatch._venueName;
       html += '</div></div>';
     } else {
       html += '<p class="team-card__no-match">暂无后续比赛</p>';
@@ -524,9 +524,9 @@
       html += '<h4 class="venue-overlay-item__name">' + v.name + '</h4>';
       html += '<p class="venue-overlay-item__city">' + v.city + ', ' + (v.country || '') + '</p>';
       html += '<div class="venue-overlay-item__meta">';
-      html += '<span>[icon-stadium] ' + (v.capacity ? (v.capacity / 1000).toFixed(1) + 'k' : '--') + ' 座</span>';
-      html += '<span>[icon-calendar] ' + (v.opened || '--') + ' 年建成</span>';
-      html += '<span>[icon-soccer] ' + (v.matches || '--') + ' 场赛事</span>';
+      html += '<span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:3px;"><ellipse cx="8" cy="6" rx="6" ry="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 6v4c0 1.7 2.7 3 6 3s6-1.3 6-3V6" stroke="currentColor" stroke-width="1.5"/><path d="M4 8v2M8 8v2M12 8v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> ' + (v.capacity ? (v.capacity / 1000).toFixed(1) + 'k' : '--') + ' 座</span>';
+      html += '<span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:3px;"><rect x="1.5" y="2.5" width="13" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 5.5h13" stroke="currentColor" stroke-width="1.5"/><path d="M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> ' + (v.opened || '--') + ' 年建成</span>';
+      html += '<span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:3px;"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5v13M1.5 8h13M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg> ' + (v.matches || '--') + ' 场赛事</span>';
       html += '</div></div>';
     }
     list.innerHTML = html;
