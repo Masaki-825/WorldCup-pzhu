@@ -1784,7 +1784,7 @@ body.night-mode .team-card-group-match { background: var(--countdown-bg); }
 .team-card-setup-hint__link:hover { opacity: 0.75; text-decoration: underline; }
 
 /* ---------- 8. 场馆地图缩小版 ---------- */
-.venue-map--compact { padding: 16px 20px; }
+.venue-map--compact { padding: 20px 24px; }
 .venue-map--compact .map-canvas { max-height: 220px; overflow: hidden; border-radius: 8px; transition: max-height 0.4s ease; }
 .venue-map--compact .map-canvas:hover { max-height: 360px; }
 .venue-map__explore { margin-top: 14px; display: flex; justify-content: center; }
@@ -2573,4 +2573,16 @@ body.night-mode .prediction-chart-card__header {
   .prediction-group-card__right {
     flex: 1 0 auto; width: 100%;
   }
+}
+/* 历史模块 Tableau 图表容器 */
+#viz1778390675042 {
+  height: auto !important;
+  max-height: 800px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+/* 图表下方经典赛事回顾区域紧贴 */
+.classic-matches {
+  margin-top: 0 !important;
 }

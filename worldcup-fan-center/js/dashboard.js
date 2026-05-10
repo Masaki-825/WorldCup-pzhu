@@ -583,6 +583,9 @@
      ================================================================ */
   async function initDashboard() {
     await loadAllData();
+    if (window.WorldCupSettings && typeof window.WorldCupSettings.initFavoriteTeam === 'function') {
+  window.WorldCupSettings.initFavoriteTeam(DashboardDataStore.teams);
+  }
     updateWelcomeBanner();
     renderTeamCard();
     renderFocusNews();

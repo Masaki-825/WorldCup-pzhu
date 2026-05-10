@@ -4,7 +4,7 @@
  *
  * 功能：
  * 1. 冠军墙：横向滚动22张卡片，fetch 加载数据
- * 2. 经典比赛回顾：硬编码5-8场经典对决
+ * 2. 经典比赛回顾：从 window.__CLASSIC_MATCHES_DATA__ 动态读取
  * 3. 冷知识盒子：随机展示 + 换一条按钮 + 淡入动画
  */
 (function () {
@@ -14,76 +14,43 @@
      常量定义
      ================================================================ */
 
-  /* ================================================================
-      经典比赛（硬编码）
-     ================================================================ */
+   /* ================================================================
+      经典比赛（从 window.__CLASSIC_MATCHES_DATA__ 动态读取）
+     ================================================================
 
-  var classicMatches = [
-    {
-      year: 1950,
-      stage: '决赛',
-      teams: '乌拉圭 vs 巴西',
-      score: '2-1',
-      venue: '巴西 里约热内卢',
-      desc: '马拉卡纳惨案——巴西在主场马拉卡纳体育场近20万观众面前，先进一球后被乌拉圭连扳两球逆转，痛失冠军。这场比赛改变了巴西足球的历史轨迹，白色球衣自此被弃用。'
-    },
-    {
-      year: 1970,
-      stage: '决赛',
-      teams: '巴西 vs 意大利',
-      score: '4-1',
-      venue: '墨西哥 墨西哥城',
-      desc: '贝利时代的巅峰之战，巴西4-1大胜意大利永久保留雷米特杯。卡洛斯-阿尔贝托的凌空抽射破门被誉为世界杯历史上最伟大的团队进球。'
-    },
-    {
-      year: 1986,
-      stage: '1/4决赛',
-      teams: '阿根廷 vs 英格兰',
-      score: '2-1',
-      venue: '墨西哥 墨西哥城',
-      desc: '马拉多纳的"上帝之手"和"世纪进球"同场诞生。先用手球破门引发争议，随后连过五人打入历史最佳进球，一己之力淘汰英格兰。'
-    },
-    {
-      year: 1998,
-      stage: '决赛',
-      teams: '法国 vs 巴西',
-      score: '3-0',
-      venue: '法国 圣但尼',
-      desc: '齐达内两记头球破门，法国本土首夺世界杯。赛前罗纳尔多突发晕厥事件至今仍是未解之谜，巴西全队失常成就了法国足球的黄金时刻。'
-    },
-    {
-      year: 2006,
-      stage: '决赛',
-      teams: '意大利 vs 法国',
-      score: '1-1 (点球5-3)',
-      venue: '德国 柏林',
-      desc: '齐达内职业生涯最后一场比赛，用一记勺子点球首开纪录，却在加时赛头顶马特拉齐被红牌罚下。与大力神杯擦肩而过的背影成为世界杯最经典的影像。'
-    },
-    {
-      year: 2014,
-      stage: '半决赛',
-      teams: '德国 vs 巴西',
-      score: '7-1',
-      venue: '巴西 贝洛奥里藏特',
-      desc: '米内罗惨案——东道主巴西在贝洛奥里藏特遭遇队史最惨痛失利。德国在29分钟内连入五球，克洛泽超越罗纳尔多成为世界杯历史射手王。'
-    },
-    {
-      year: 2022,
-      stage: '决赛',
-      teams: '阿根廷 vs 法国',
-      score: '3-3 (点球4-2)',
-      venue: '卡塔尔 卢赛尔',
-      desc: '世界杯历史上最伟大的决赛之一。梅西梅开二度，姆巴佩帽子戏法，双方120分钟内战成3-3。阿根廷点球大战获胜，梅西终获世界杯冠军。'
-    },
-    {
-      year: 2018,
-      stage: '1/8决赛',
-      teams: '法国 vs 阿根廷',
-      score: '4-3',
-      venue: '俄罗斯 喀山',
-      desc: '姆巴佩横空出世之战——19岁的他用速度摧毁了阿根廷防线，独造三球（两球+造点）。一场七球盛宴标志法国新生代全面接管世界足坛。'
+   * 数据源为外部注入的 window.__CLASSIC_MATCHES_DATA__ 数组。
+   * 字段：比赛年份、赛事阶段、对阵双方、全场比分、加时/点球、
+   *        关键球星、经典事件、举办地
+   * 通过 getClassicMatchesData() 完成中文键名 -> 内部字段的映射。
+
+   */
+
+  /**
+   * 从 window.__CLASSIC_MATCHES_DATA__ 读取并映射字段
+   * @returns {Array|null} 映射后的比赛数组，失败或为空时返回 null
+   */
+  function getClassicMatchesData() {
+    try {
+      var raw = window.__CLASSIC_MATCHES_DATA__;
+      if (!raw || !Array.isArray(raw) || raw.length === 0) {
+        return null;
+      }
+       return raw.map(function (item) {
+         return {
+           year: item['比赛年份'],
+           stage: item['赛事阶段'],
+           teams: item['对阵双方'],
+           score: item['全场比分'],
+           overtime: item['加时/点球'] || '',
+           star: item['关键球星'] || '',
+           venue: item['举办地'],
+           desc: item['经典事件']
+         };
+       });
+    } catch (e) {
+      return null;
     }
-  ];
+  }
 
   /* ================================================================
      工具函数
@@ -196,6 +163,9 @@
   }
 
   function getFilteredMatches() {
+    var allData = getClassicMatchesData();
+    if (!allData) return [];
+
     var era = null;
     for (var i = 0; i < eraRanges.length; i++) {
       if (eraRanges[i].label === currentEraFilter) {
@@ -204,7 +174,7 @@
       }
     }
 
-    return classicMatches.filter(function (m) {
+    return allData.filter(function (m) {
       return m.year >= era.start && m.year <= era.end;
     });
   }
@@ -213,10 +183,16 @@
     var container = safeGetById('classic-matches-list');
     if (!container) return;
 
+    var allData = getClassicMatchesData();
+    if (!allData) {
+      container.innerHTML = '<p class="classic-matches__empty">经典比赛数据暂不可用</p>';
+      return;
+    }
+
     var filtered = getFilteredMatches();
 
     if (!filtered.length) {
-      container.innerHTML = '<p class="classic-matches__empty">该年代暂无经典比赛记录。</p>';
+      container.innerHTML = '<p class="classic-matches__empty">经典比赛数据暂不可用</p>';
       return;
     }
 
@@ -235,12 +211,18 @@
       html += '<span class="classic-match-card__year">' + m.year + '</span>';
       html += '<span class="classic-match-card__stage">' + m.stage + '</span>';
       html += '</div>';
-      // 中部：对阵 + 比分
-      html += '<p class="classic-match-card__matchup">' + m.teams + '</p>';
-      html += '<p class="classic-match-card__score">' + m.score + '</p>';
-      // 底部：事件描述 + 举办地
-      html += '<p class="classic-match-card__event">' + m.desc + '</p>';
-      html += '<p class="classic-match-card__venue">' + m.venue + '</p>';
+       // 中部：对阵 + 比分
+       html += '<p class="classic-match-card__matchup">' + m.teams + '</p>';
+       html += '<p class="classic-match-card__score">' + m.score + '</p>';
+       if (m.overtime) {
+         html += '<p class="classic-match-card__overtime">' + m.overtime + '</p>';
+       }
+       if (m.star) {
+         html += '<p class="classic-match-card__star">关键球星：' + m.star + '</p>';
+       }
+       // 底部：事件描述 + 举办地
+       html += '<p class="classic-match-card__event">' + m.desc + '</p>';
+       html += '<p class="classic-match-card__venue">' + m.venue + '</p>';
       html += '</div>';
     }
 
