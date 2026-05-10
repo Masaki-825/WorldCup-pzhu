@@ -1784,9 +1784,9 @@ body.night-mode .team-card-group-match { background: var(--countdown-bg); }
 .team-card-setup-hint__link:hover { opacity: 0.75; text-decoration: underline; }
 
 /* ---------- 8. 场馆地图缩小版 ---------- */
-.venue-map--compact { padding: 20px 24px; }
-.venue-map--compact .map-canvas { max-height: 220px; overflow: hidden; border-radius: 8px; transition: max-height 0.4s ease; }
-.venue-map--compact .map-canvas:hover { max-height: 360px; }
+.venue-map--compact { padding: 20px 24px; flex: none !important; }
+.venue-map--compact .map-canvas { max-height: 308px; min-height: 0; flex: none; height: 308px; overflow: hidden; border-radius: 8px; transition: max-height 0.4s ease; }
+.venue-map--compact .map-canvas:hover { max-height: 500px; }
 .venue-map__explore { margin-top: 14px; display: flex; justify-content: center; }
 .venue-explore-btn {
   display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px;

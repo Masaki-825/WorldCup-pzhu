@@ -157,58 +157,50 @@
     var container = document.getElementById('focus-news-list');
     if (!container) return;
 
-    // 基于赛程数据生成焦点新闻（模拟新闻推送）
-    var schedule = DashboardDataStore.schedule;
-    if (!schedule || !schedule.length) {
-      container.innerHTML = '<p class="focus-news__loading">新闻加载中，请稍候...</p>';
-      return;
-    }
-
-    // 取最近 4 场小组赛作为"焦点新闻"
-    var groupMatches = schedule.filter(function (m) {
-      return m.phase && m.phase.indexOf('小组赛') !== -1 && m.teams && m.teams.length === 2;
-    });
-
-    // 按日期排序，取最近的
-    var today = new Date().toISOString().slice(0, 10);
-    var upcoming = groupMatches.filter(function (m) { return m.date >= today; });
-    var featured = upcoming.slice(0, 4);
-    // 不够则补充已过去的
-    if (featured.length < 4) {
-      var past = groupMatches.filter(function (m) { return m.date < today; }).reverse();
-      while (featured.length < 4 && past.length > 0) {
-        featured.push(past.shift());
+    // 硬编码外部新闻链接
+    var externalLinks = [
+      {
+        url: 'https://news.qq.com/rain/a/20260510A047T900',
+        title: 'FIFA天价转播权报价遭冷遇，谈判中大幅降价至1.5亿美元',
+        source: '腾讯新闻',
+        date: '2026-05-10'
+      },
+      {
+        url: 'https://cqrb.cn/PCruiping/2026-05-10/2662943_pc.html',
+        title: '重庆"追风女孩"亮相"苏超"赛场！有望担任世界杯决赛小旗手',
+        source: '重庆日报',
+        date: '2026-05-10'
+      },
+      {
+        url: 'https://news.ifeng.com/c/8t0e0P1Iw1h',
+        title: '伊朗足协提出参加世界杯10项条件：球员顺利获得签证、只允许官方国旗入场',
+        source: '凤凰网',
+        date: '2026-05-10'
+      },
+      {
+        url: 'https://news.qq.com/rain/a/20260508A08X8I00',
+        title: '美加墨将各自举办世界杯开幕式；水果姐将在美国开幕式压轴',
+        source: '腾讯新闻',
+        date: '2026-05-08'
       }
-    }
+    ];
 
     var html = '';
-    // 静默失败
-    if (!featured || featured.length === 0) {
-      container.innerHTML = '<p class="focus-news__loading">暂无焦点新闻</p>';
-      return;
-    }
-
-    for (var i = 0; i < featured.length; i++) {
-      var m = featured[i];
-      var home = getTeamName(m.teams[0]);
-      var away = getTeamName(m.teams[1]);
-      var venue = resolveVenueName(m.venue);
-      var titleText = home + ' vs ' + away + ' — ' + (m.phase || '');
+    for (var i = 0; i < externalLinks.length; i++) {
+      var item = externalLinks[i];
       html += '<div class="focus-news-item">';
-      html += '<h4 class="focus-news-item__title"><a href="#schedule">' + titleText + '</a></h4>';
-      html += '<div class="focus-news-item__meta">[icon-calendar] ' + m.date + ' &nbsp;|&nbsp; [icon-location] ' + venue + '</div>';
+      html += '<h4 class="focus-news-item__title"><a href="' + item.url + '" target="_blank">' + item.title + '</a></h4>';
+      html += '<div class="focus-news-item__meta">' + item.source + ' &nbsp;|&nbsp; ' + item.date + '</div>';
       html += '</div>';
     }
     container.innerHTML = html;
 
-    // 为标题链接绑定导航跳转
-    var links = container.querySelectorAll('.focus-news-item__title a');
-    links.forEach(function (l) {
-      l.addEventListener('click', function (e) {
-        e.preventDefault();
-        navigateToSection('schedule');
-      });
-    });
+    // 修改"更多新闻"链接
+    var moreLink = document.querySelector('.focus-news__more');
+    if (moreLink) {
+      moreLink.href = 'https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news';
+      moreLink.target = '_blank';
+    }
   }
 
   /* ================================================================

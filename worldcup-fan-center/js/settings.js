@@ -22,6 +22,63 @@
   const FONT_LABELS = { small: '小', medium: '中', large: '大' };
   const DEFAULT_FONT_SIZE = 'medium';
 
+  const DEEP_DIVE_LINKS = [
+    {
+      category: '国内综合资讯社区',
+      links: [
+        { name: '懂球帝', url: 'https://www.dongqiudi.com' },
+        { name: '直播吧', url: 'https://www.zhibo8.com' },
+        { name: '虎扑足球', url: 'https://football.hupu.com' }
+      ]
+    },
+    {
+      category: '国际综合资讯',
+      links: [
+        { name: 'ESPN 足球', url: 'https://www.espn.com/football' },
+        { name: 'Sky Sports 足球', url: 'https://www.skysports.com/football' }
+      ]
+    },
+    {
+      category: '专业足球数据',
+      links: [
+        { name: 'WhoScored', url: 'https://www.whoscored.com' },
+        { name: 'SofaScore', url: 'https://www.sofascore.com' },
+        { name: '转会市场 Transfermarkt', url: 'https://www.transfermarkt.com' },
+        { name: 'FBref', url: 'https://fbref.com' },
+        { name: 'Understat', url: 'https://understat.com' }
+      ]
+    },
+    {
+      category: '实时比分赛程',
+      links: [
+        { name: 'Flashscore', url: 'https://www.flashscore.com' },
+        { name: 'LiveScore', url: 'https://www.livescore.com' },
+        { name: 'FotMob', url: 'https://www.fotmob.com' }
+      ]
+    },
+    {
+      category: '国内合法直播',
+      links: [
+        { name: '咪咕视频体育', url: 'https://www.miguvideo.com' },
+        { name: '爱奇艺体育', url: 'https://sports.iqiyi.com' },
+        { name: '央视体育', url: 'https://sports.cntv.cn' }
+      ]
+    },
+    {
+      category: '球迷海外社区',
+      links: [
+        { name: 'Reddit 足球板块', url: 'https://reddit.com/r/soccer' }
+      ]
+    },
+    {
+      category: '官方权威站点',
+      links: [
+        { name: '欧足联 UEFA 官网', url: 'https://www.uefa.com' },
+        { name: '国际足联 FIFA 官网', url: 'https://www.fifa.com' }
+      ]
+    }
+  ];
+
   /* ================================================================
      工具函数
      ================================================================ */
@@ -337,12 +394,137 @@
   }
 
   /* ================================================================
+     功能4：深度探索角
+     ================================================================ */
+
+  /**
+   * 注入深度探索角的 CSS 样式
+   */
+  function injectDeepDiveStyles() {
+    if (document.getElementById('deep-dive-corner-styles')) return;
+
+      var styleEl = document.createElement('style');
+      styleEl.id = 'deep-dive-corner-styles';
+      styleEl.textContent = [
+        '.settings-deep-dive {',
+        '  margin-top: 2em;',
+        '  padding-top: 1.5em;',
+        '  border-top: 1px solid var(--border-light);',
+        '}',
+        '.settings-deep-dive__title {',
+        '  font-size: 0.8em;',
+        '  color: var(--text-secondary);',
+        '  margin: 0 0 1em 0;',
+        '  font-weight: 400;',
+        '  letter-spacing: 0.05em;',
+        '}',
+        '.settings-deep-dive__category {',
+        '  font-size: 0.8em;',
+        '  color: var(--text-secondary);',
+        '  margin: 0.9em 0 0.35em 0;',
+        '  padding: 0;',
+        '}',
+        '.settings-deep-dive__category strong {',
+        '  font-weight: 600;',
+        '}',
+        '.settings-deep-dive__links {',
+        '  font-size: 0.8em;',
+        '  color: var(--text-secondary);',
+        '  line-height: 1.75;',
+        '  display: flex;',
+        '  flex-wrap: wrap;',
+        '  gap: 0 0.4em;',
+        '}',
+        '.settings-deep-dive__links a {',
+        '  color: var(--text-secondary);',
+        '  text-decoration: none;',
+        '  white-space: nowrap;',
+        '}',
+        '.settings-deep-dive__links a:hover {',
+        '  text-decoration: underline;',
+        '  color: var(--accent);',
+        '}',
+        '.settings-deep-dive__sep {',
+        '  color: var(--border-light);',
+        '  user-select: none;',
+        '}',
+        '.settings-deep-dive__links a:last-of-type ~ .settings-deep-dive__sep {',
+        '  display: none;',
+        '}'
+      ].join('\n');
+      document.head.appendChild(styleEl);
+   }
+
+  /**
+   * 初始化深度探索角：在设置面板底部添加外链列表
+   */
+  function initDeepDiveCorner() {
+    var settingsSection = document.getElementById('settings');
+    if (!settingsSection) {
+      console.warn('找不到设置面板容器 #settings，跳过深度探索角初始化。');
+      return;
+    }
+
+    // 避免重复注入
+    if (document.getElementById('deep-dive-corner')) return;
+
+    // 注入样式
+    injectDeepDiveStyles();
+
+    // 构建 HTML
+    var wrapper = document.createElement('div');
+    wrapper.className = 'settings-deep-dive';
+    wrapper.id = 'deep-dive-corner';
+
+    var title = document.createElement('p');
+    title.className = 'settings-deep-dive__title';
+    title.textContent = '深度探索角';
+    wrapper.appendChild(title);
+
+    DEEP_DIVE_LINKS.forEach(function (group) {
+      var catP = document.createElement('p');
+      catP.className = 'settings-deep-dive__category';
+
+      var strong = document.createElement('strong');
+      strong.textContent = group.category;
+      catP.appendChild(strong);
+
+      wrapper.appendChild(catP);
+
+      var linksWrapper = document.createElement('div');
+      linksWrapper.className = 'settings-deep-dive__links';
+
+      group.links.forEach(function (link, idx) {
+        var a = document.createElement('a');
+        a.href = link.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = link.name;
+        linksWrapper.appendChild(a);
+
+        // 分隔符（最后一个不加，CSS 已处理隐藏最后一个后面的 sep）
+        if (idx < group.links.length - 1) {
+          var sep = document.createElement('span');
+          sep.className = 'settings-deep-dive__sep';
+          sep.textContent = '|';
+          linksWrapper.appendChild(sep);
+        }
+      });
+
+      wrapper.appendChild(linksWrapper);
+    });
+
+    settingsSection.appendChild(wrapper);
+  }
+
+  /* ================================================================
      初始化入口
      ================================================================ */
 
   function init() {
     initThemeSettings();
     initFontSizeSettings();
+    initDeepDiveCorner();
     console.log('设置模块已就绪。');
   }
 
@@ -358,7 +540,9 @@
     initFavoriteTeam: initFavoriteTeam,
     getFavoriteTeam: getFavoriteTeam,
     /** 手动刷新主题按钮 UI */
-    updateThemeToggleUI: updateThemeToggleUI
+    updateThemeToggleUI: updateThemeToggleUI,
+    /** 刷新深度探索角 */
+    refreshDeepDiveCorner: initDeepDiveCorner
   };
 
 })();
