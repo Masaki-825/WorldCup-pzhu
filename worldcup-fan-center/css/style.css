@@ -78,6 +78,11 @@
   /* 筛选器 */
   --filter-border: #d0c8ba;
   --filter-focus-shadow-day: 0 0 0 3px rgba(201, 93, 58, 0.18);
+
+  /* 背景图片 */
+  --bg-image-day: url('https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1920&q=80');
+  --bg-image-night: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80');
+  --bg-image-opacity: 0.125;
 }
 
 /* 夜间主题 — 烈焰德比：热血红底 + 饱满鲜艳色彩 */
@@ -145,6 +150,9 @@ body.night-mode {
   /* 筛选器 */
   --filter-border: #5a2828;
   --filter-focus-shadow-day: 0 0 0 3px rgba(255, 68, 51, 0.25);
+
+  /* 背景图片透明度 — 夜间稍高 */
+  --bg-image-opacity: 0.14;
 }
 
 /* ========================================
@@ -164,6 +172,7 @@ html {
 }
 
 body {
+  position: relative;
   font-family: var(--font-main);
   font-size: var(--font-base);
   background-color: var(--bg-primary);
@@ -171,6 +180,25 @@ body {
   line-height: 1.6;
   padding-top: var(--nav-height);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 全局背景纹理层（日夜自动切换） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--bg-image-day);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--bg-image-opacity);
+  pointer-events: none;
+  transition: background-image 0.4s ease, opacity 0.4s ease;
+}
+
+body.night-mode::before {
+  background-image: var(--bg-image-night);
 }
 
 /* ========================================
@@ -238,6 +266,8 @@ body {
    主内容区
    ======================================== */
 #main-content {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 32px 24px;
