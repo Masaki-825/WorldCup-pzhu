@@ -156,7 +156,9 @@
       ? '<span class="schedule-card__venue">' + venueName + (venueCity ? '（' + venueCity + '）' : '') + '</span>'
       : '';
 
-    return '<div class="schedule-card">'
+    var teamIdsAttr = hasTeams ? ' data-team-ids="' + teams[0] + ',' + teams[1] + '"' : '';
+
+    return '<div class="schedule-card"' + teamIdsAttr + '>'
       + '<div class="schedule-card__top">' + groupBadge + '</div>'
       + '<div class="schedule-card__teams">'
       + '<span class="schedule-card__team schedule-card__team--home">' + team1Display + '</span>'
@@ -352,6 +354,7 @@
     renderList(filtered);
     setupDateObserver();
     renderMinimap(filtered);
+    applyFavoriteMarkers();
   }
 
   function bindFilters() {
@@ -366,18 +369,73 @@
   /* ================================================================
      迷你地图"仅显示主队"切换
      ================================================================ */
+  function getFavoriteTeamId() {
+    try {
+      return localStorage.getItem('favorite-team');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * 应用主队金色标记：
+   * - 迷你地图：给主队比赛日添加 .minimap__day--favorite 类
+   * - 赛程卡片：给主队比赛的卡片添加 .schedule-card--favorite 类
+   */
+  function applyFavoriteMarkers() {
+    var favTeamId = getFavoriteTeamId();
+    if (!favTeamId) return;
+
+    // ---- 迷你地图：标记主队比赛日 ----
+    var days = document.querySelectorAll('.minimap__day');
+    days.forEach(function (day) {
+      var title = day.getAttribute('title') || '';
+      // 格式："X月Y日 星期X - N场比赛"
+      var dateMatch = title.match(/(\d+)月(\d+)日/);
+      if (!dateMatch) return;
+
+      var year = new Date().getFullYear();
+      var month = parseInt(dateMatch[1], 10);
+      var dayNum = parseInt(dateMatch[2], 10);
+      var mStr = (month < 10 ? '0' : '') + month;
+      var dStr = (dayNum < 10 ? '0' : '') + dayNum;
+      var dateStr = year + '-' + mStr + '-' + dStr;
+
+      // 检查该日期是否有主队比赛
+      var hasFavorite = _scheduleData.some(function (m) {
+        return m.date === dateStr && m.teams && m.teams.indexOf(favTeamId) >= 0;
+      });
+
+      if (hasFavorite) {
+        day.classList.add('minimap__day--favorite');
+      } else {
+        day.classList.remove('minimap__day--favorite');
+      }
+    });
+
+    // ---- 赛程卡片：标记主队比赛 ----
+    var cards = document.querySelectorAll('.schedule-card');
+    cards.forEach(function (card) {
+      var idsAttr = card.getAttribute('data-team-ids');
+      if (!idsAttr) return;
+      var ids = idsAttr.split(',');
+      var isFavorite = ids.indexOf(favTeamId) >= 0;
+
+      if (isFavorite) {
+        card.classList.add('schedule-card--favorite');
+      } else {
+        card.classList.remove('schedule-card--favorite');
+      }
+    });
+  }
+
   function bindMinimapToggle() {
     var checkbox = document.getElementById('minimap-fav-only');
     if (!checkbox) return;
     checkbox.addEventListener('change', function () {
       var filtered = getFilteredData();
       if (checkbox.checked) {
-        // 获取用户主队 ID
-        var favTeamId = null;
-        try {
-          var stored = localStorage.getItem('wc_favorite_team');
-          if (stored) favTeamId = stored;
-        } catch (e) { /* ignore */ }
+        var favTeamId = getFavoriteTeamId();
 
         if (favTeamId) {
           filtered = filtered.filter(function (m) {
@@ -386,6 +444,7 @@
         }
       }
       renderMinimap(filtered);
+      applyFavoriteMarkers();
     });
   }
 
@@ -409,6 +468,7 @@
     renderList(filtered);
     setupDateObserver();
     renderMinimap(filtered);
+    applyFavoriteMarkers();
     bindFilters();
     bindMinimapToggle();
   }
