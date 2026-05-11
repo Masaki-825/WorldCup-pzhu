@@ -176,8 +176,99 @@
     loadThemePreference();
     listenSystemThemeChange();
     initThemeToggle();
+    createExploreBtn();
     console.log('主题模块已就绪（当前：' +
       (document.body.classList.contains('night-mode') ? '夜间模式' : '日间模式') + '）。');
+  }
+
+
+  /**
+   * 创建“深度探索”按钮及下拉面板
+   */
+  function createExploreBtn() {
+    var nav = document.getElementById('main-nav');
+    if (!nav) return;
+
+    // 下拉箭头 SVG 16x16
+    var arrowDown = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
+    // 按钮
+    var btn = document.createElement('button');
+    btn.className = 'explore-toggle-btn';
+    btn.setAttribute('aria-label', '深度探索');
+    btn.innerHTML = '深度探索 ' + arrowDown;
+
+    // 下拉面板
+    var dropdown = document.createElement('div');
+    dropdown.id = 'explore-dropdown';
+    dropdown.className = 'explore-dropdown';
+    dropdown.innerHTML =
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">国内综合资讯社区</h4>' +
+        '<a class="explore-category__link" href="https://www.dongqiudi.com" target="_blank" rel="noopener">懂球帝</a>' +
+        '<a class="explore-category__link" href="https://www.zhibo8.com" target="_blank" rel="noopener">直播吧</a>' +
+        '<a class="explore-category__link" href="https://football.hupu.com" target="_blank" rel="noopener">虎扑足球</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">国际综合资讯</h4>' +
+        '<a class="explore-category__link" href="https://www.espn.com/football" target="_blank" rel="noopener">ESPN 足球</a>' +
+        '<a class="explore-category__link" href="https://www.skysports.com/football" target="_blank" rel="noopener">Sky Sports 足球</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">专业足球数据</h4>' +
+        '<a class="explore-category__link" href="https://www.whoscored.com" target="_blank" rel="noopener">WhoScored</a>' +
+        '<a class="explore-category__link" href="https://www.sofascore.com" target="_blank" rel="noopener">SofaScore</a>' +
+        '<a class="explore-category__link" href="https://www.transfermarkt.com" target="_blank" rel="noopener">转会市场 Transfermarkt</a>' +
+        '<a class="explore-category__link" href="https://fbref.com" target="_blank" rel="noopener">FBref</a>' +
+        '<a class="explore-category__link" href="https://understat.com" target="_blank" rel="noopener">Understat</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">实时比分赛程</h4>' +
+        '<a class="explore-category__link" href="https://www.flashscore.com" target="_blank" rel="noopener">Flashscore</a>' +
+        '<a class="explore-category__link" href="https://www.livescore.com" target="_blank" rel="noopener">LiveScore</a>' +
+        '<a class="explore-category__link" href="https://www.fotmob.com" target="_blank" rel="noopener">FotMob</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">国内合法直播</h4>' +
+        '<a class="explore-category__link" href="https://www.miguvideo.com" target="_blank" rel="noopener">咪咕视频体育</a>' +
+        '<a class="explore-category__link" href="https://sports.iqiyi.com" target="_blank" rel="noopener">爱奇艺体育</a>' +
+        '<a class="explore-category__link" href="https://sports.cntv.cn" target="_blank" rel="noopener">央视体育</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">球迷海外社区</h4>' +
+        '<a class="explore-category__link" href="https://reddit.com/r/soccer" target="_blank" rel="noopener">Reddit 足球板块</a>' +
+      '</div>' +
+      '<div class="explore-category">' +
+        '<h4 class="explore-category__title">官方权威站点</h4>' +
+        '<a class="explore-category__link" href="https://www.uefa.com" target="_blank" rel="noopener">欧足联 UEFA 官网</a>' +
+        '<a class="explore-category__link" href="https://www.fifa.com" target="_blank" rel="noopener">国际足联 FIFA 官网</a>' +
+      '</div>';
+
+    // 按钮点击：切换显示/隐藏
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (dropdown.classList.contains('explore-open')) {
+        dropdown.classList.remove('explore-open');
+      } else {
+        dropdown.classList.add('explore-open');
+      }
+    });
+
+    // 点击页面其他区域关闭面板
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target) && e.target !== btn) {
+        dropdown.classList.remove('explore-open');
+      }
+    });
+
+    // 插入到导航栏（放在主题切换按钮之后）
+    var themeBtn = nav.querySelector('.theme-toggle-btn');
+    if (themeBtn && themeBtn.nextSibling) {
+      nav.insertBefore(btn, themeBtn.nextSibling);
+    } else {
+      nav.appendChild(btn);
+    }
+    nav.appendChild(dropdown);
   }
 
   // 挂载到全局，方便其他模块调用
