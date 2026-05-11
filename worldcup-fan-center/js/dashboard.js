@@ -333,6 +333,27 @@
     if (!body) return;
 
     var favorite = getFavoriteTeam();
+    var cardContainer = document.getElementById('team-card');
+
+    // 根据是否已选择主队，切换容器的 dormant/active 状态并管理徽章
+    if (cardContainer) {
+      if (favorite) {
+        cardContainer.classList.remove('team-card--dormant');
+        cardContainer.classList.add('team-card--active');
+        // 如果徽章还不存在，则添加
+        if (!cardContainer.querySelector('.team-card__badge')) {
+          var badge = document.createElement('span');
+          badge.className = 'team-card__badge';
+          badge.textContent = '已锁定';
+          cardContainer.appendChild(badge);
+        }
+      } else {
+        cardContainer.classList.add('team-card--dormant');
+        cardContainer.classList.remove('team-card--active');
+        var existingBadge = cardContainer.querySelector('.team-card__badge');
+        if (existingBadge) existingBadge.remove();
+      }
+    }
 
     if (!favorite) {
       body.innerHTML = '<p class="team-card__placeholder">您看好哪支球队？前往 <a href="#settings" class="team-card__link" data-section="settings">设置</a> 选择主队</p>';
