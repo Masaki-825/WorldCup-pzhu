@@ -230,8 +230,177 @@
   }
 
   /* ================================================================
-     冷知识盒子
-     ================================================================ */
+      世界杯时间轴
+      ================================================================ */
+
+  var timelineTriviaTimer = null;
+  var timelineTriviaVisible = false;
+
+  function renderTimeline() {
+    // 已存在则跳过，避免导航切换时重复创建
+    if (document.getElementById('worldcup-timeline')) return;
+
+    // 查找插入位置（classic-matches 之后、trivia-box 之前）
+    var classicList = document.getElementById('classic-matches-list');
+    var anchor = null;
+    if (classicList) {
+      anchor = classicList.closest('section') || classicList.parentElement;
+    }
+    if (!anchor) {
+      var triviaEl = document.getElementById('trivia-content') || document.getElementById('trivia-box');
+      if (triviaEl) {
+        anchor = triviaEl.closest('section') || triviaEl.parentElement;
+      }
+    }
+
+    // 冠军数据查找表
+    var championMap = {};
+    try {
+      var champions = window.__HISTORY_DATA__ && window.__HISTORY_DATA__.champions;
+      if (champions) {
+        for (var ci = 0; ci < champions.length; ci++) {
+          championMap[champions[ci].year] = champions[ci];
+        }
+      }
+    } catch (e) {}
+
+    // 年份列表：1930–2026，步进 4 年，跳过二战
+    var years = [];
+    for (var y = 1930; y <= 2026; y += 4) {
+      if (y === 1942 || y === 1946) continue;
+      years.push(y);
+    }
+
+    // 时间轴轨道 HTML
+    var trackHtml = '<div class="timeline__track">';
+    for (var yi = 0; yi < years.length; yi++) {
+      var year = years[yi];
+      var isFuture = year === 2026;
+      var isPast = !isFuture && year <= 2022;
+      var dotClass = isFuture ? ' timeline__dot--future' : (isPast ? ' timeline__dot--past' : '');
+
+      trackHtml += '<div class="timeline__year" data-year="' + year + '">';
+      trackHtml += '<span class="timeline__dot' + dotClass + '"></span>';
+      trackHtml += '<span class="timeline__year-label">' + year + '</span>';
+      trackHtml += '</div>';
+    }
+    trackHtml += '</div>';
+
+    // 冷知识显示区
+    trackHtml += '<div class="timeline__trivia-reveal" id="timeline-trivia-reveal"></div>';
+
+    // 创建主容器
+    var timeline = document.createElement('div');
+    timeline.id = 'worldcup-timeline';
+    timeline.innerHTML = trackHtml;
+
+    // Tooltip 挂到 body（保证 fixed 定位不受 overflow 裁剪）
+    var tooltip = document.createElement('div');
+    tooltip.className = 'timeline__tooltip';
+    tooltip.id = 'timeline-tooltip';
+    tooltip.style.display = 'none';
+    document.body.appendChild(tooltip);
+
+    // 插入 DOM
+    if (anchor && anchor.parentNode) {
+      anchor.parentNode.insertBefore(timeline, anchor.nextSibling);
+    } else {
+      var fallback = document.querySelector('.main-content') || document.body;
+      fallback.appendChild(timeline);
+    }
+
+    // 绑定交互
+    bindTimelineEvents(timeline, tooltip, championMap);
+    bindTimelineTriviaEasterEgg(timeline);
+  }
+
+  function bindTimelineEvents(timeline, tooltip, championMap) {
+    var allDots = timeline.querySelectorAll('.timeline__dot');
+
+    for (var d = 0; d < allDots.length; d++) {
+      (function (dot) {
+        dot.addEventListener('mouseenter', function () {
+          var yearEl = dot.closest('.timeline__year');
+          if (!yearEl) return;
+          var year = parseInt(yearEl.getAttribute('data-year'), 10);
+
+          if (dot.classList.contains('timeline__dot--past')) {
+            var cd = championMap[year];
+            if (cd) {
+              tooltip.innerHTML =
+                '<strong>' + cd.year + ' 年</strong><br>' +
+                '冠军：' + cd.champion + '<br>' +
+                '举办国：' + cd.host +
+                (cd.third ? '<br>季军：' + cd.third : '');
+            } else {
+              tooltip.innerHTML = '<strong>' + year + ' 年</strong><br>数据暂缺';
+            }
+          } else if (dot.classList.contains('timeline__dot--future')) {
+            tooltip.innerHTML = '<strong>2026 年</strong><br>即将在北美三国举办<br>敬请期待';
+          }
+          tooltip.style.display = 'block';
+        });
+
+        dot.addEventListener('mousemove', function (e) {
+          var tx = e.clientX + 16;
+          var ty = e.clientY - 10;
+          if (tx + 220 > window.innerWidth) {
+            tx = e.clientX - 220;
+          }
+          if (ty < 0) ty = 8;
+          tooltip.style.left = tx + 'px';
+          tooltip.style.top = ty + 'px';
+        });
+
+        dot.addEventListener('mouseleave', function () {
+          tooltip.style.display = 'none';
+        });
+      })(allDots[d]);
+    }
+  }
+
+  function bindTimelineTriviaEasterEgg(timeline) {
+    var revealEl = timeline.querySelector('#timeline-trivia-reveal');
+    if (!revealEl) return;
+
+    timeline.addEventListener('mouseenter', function () {
+      if (timelineTriviaTimer) {
+        clearTimeout(timelineTriviaTimer);
+        timelineTriviaTimer = null;
+      }
+
+      timelineTriviaTimer = setTimeout(function () {
+        if (timelineTriviaVisible) return;
+
+        var triviaItems = [];
+        try {
+          if (window.__HISTORY_DATA__ && window.__HISTORY_DATA__.trivia) {
+            triviaItems = window.__HISTORY_DATA__.trivia;
+          }
+        } catch (e) {}
+
+        if (triviaItems.length) {
+          var item = triviaItems[Math.floor(Math.random() * triviaItems.length)];
+          revealEl.innerHTML =
+            '<h4 class="timeline__trivia-title">' + (item.title || '你知道吗？') + '</h4>' +
+            '<p class="timeline__trivia-content">' + (item.content || '') + '</p>';
+          revealEl.classList.add('timeline__trivia-reveal--visible');
+          timelineTriviaVisible = true;
+        }
+      }, 3000);
+    });
+
+    timeline.addEventListener('mouseleave', function () {
+      if (timelineTriviaTimer) {
+        clearTimeout(timelineTriviaTimer);
+        timelineTriviaTimer = null;
+      }
+    });
+  }
+
+  /* ================================================================
+      冷知识盒子
+      ================================================================ */
 
   var triviaData = [];
   var currentTriviaIndex = -1;
@@ -302,6 +471,7 @@
     loadChampionsWall();
     renderEraButtons();
     renderClassicMatches();
+    renderTimeline();
     loadTrivia();
     bindTriviaButton();
   }

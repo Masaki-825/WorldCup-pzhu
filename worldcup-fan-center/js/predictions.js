@@ -353,7 +353,101 @@
      ================================================================ */
 
   function renderAccuracyArea() {
-    // 静态占位文本保留在 HTML 中，比赛开始后动态更新
+    var container = document.getElementById('prediction-accuracy');
+    if (!container) return;
+
+    // 防止重复添加按钮
+    if (document.getElementById('btn-generate-card')) return;
+
+    var btn = document.createElement('button');
+    btn.id = 'btn-generate-card';
+    btn.className = 'btn btn--primary';
+    btn.type = 'button';
+    btn.textContent = '生成我的预测档案';
+    btn.addEventListener('click', generatePredictionCard);
+    container.appendChild(btn);
+  }
+
+  /* ================================================================
+      生成我的预测档案 - 弹窗卡片
+      ================================================================ */
+
+  function generatePredictionCard() {
+    // 收集数据
+    var favoriteTeam = localStorage.getItem('favorite-team');
+    var teamName = favoriteTeam ? getTeamName(favoriteTeam) : '未选择';
+
+    var fullData = safeGetJSON(STORAGE_KEY_FULL);
+    var groups = (fullData && fullData.groups) ? fullData.groups : {};
+
+    var dateStr = new Date().toLocaleDateString('zh-CN');
+
+    // 构建小组出线标签 HTML
+    var groupTagsHtml = '';
+    var groupLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
+    var hasAnyGroup = false;
+    for (var g = 0; g < groupLetters.length; g++) {
+      var gl = groupLetters[g];
+      var selected = groups[gl];
+      if (selected && selected.length > 0) {
+        hasAnyGroup = true;
+        var teamNames = [];
+        for (var s = 0; s < selected.length; s++) {
+          teamNames.push(getTeamName(selected[s]));
+        }
+        groupTagsHtml += '<span class="prediction-card__group-tag">' + gl + '组：' + teamNames.join('、') + '</span>';
+      }
+    }
+    if (!hasAnyGroup) {
+      groupTagsHtml = '<span class="prediction-card__group-tag">暂无预测</span>';
+    }
+
+    // 创建弹窗遮罩
+    var overlay = document.createElement('div');
+    overlay.className = 'prediction-card-overlay';
+
+    // 创建卡片
+    var card = document.createElement('div');
+    card.className = 'prediction-card';
+    card.innerHTML =
+      '<button class="prediction-card__close" type="button" aria-label="关闭">&times;</button>' +
+      '<div class="prediction-card__title">2026世界杯预测档案</div>' +
+      '<div class="prediction-card__team">我的主队：' + teamName + '</div>' +
+      '<div class="prediction-card__group-list">' + groupTagsHtml + '</div>' +
+      '<div class="prediction-card__date">生成日期：' + dateStr + '</div>' +
+      '<div class="prediction-card__footer">世界杯结束后回来验证</div>';
+
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+
+    // 关闭逻辑
+    function closeModal() {
+      if (overlay.parentNode) {
+        overlay.parentNode.removeChild(overlay);
+      }
+    }
+
+    // 点击遮罩层关闭（仅遮罩本身）
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    });
+
+    // X 按钮关闭
+    var closeBtn = card.querySelector('.prediction-card__close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+
+    // ESC 键关闭
+    function onKeydown(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+        document.removeEventListener('keydown', onKeydown);
+      }
+    }
+    document.addEventListener('keydown', onKeydown);
   }
 
   /* ================================================================
