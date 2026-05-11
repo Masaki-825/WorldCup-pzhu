@@ -301,9 +301,10 @@
     tooltip.style.display = 'none';
     document.body.appendChild(tooltip);
 
-    // 插入 DOM
-    if (anchor && anchor.parentNode) {
-      anchor.parentNode.insertBefore(timeline, anchor.nextSibling);
+    // 插入 DOM：追加到 history section 内部最底部，随模块切换自动隐藏
+    var historySection = document.getElementById('history');
+    if (historySection) {
+      historySection.appendChild(timeline);
     } else {
       var fallback = document.querySelector('.main-content') || document.body;
       fallback.appendChild(timeline);
